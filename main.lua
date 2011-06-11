@@ -1,4 +1,6 @@
 require "TEsound"
+require "camera"
+require "vector"
 
 local map -- stores tiledata
 local mapWidth, mapHeight -- width and height in tiles
@@ -19,6 +21,11 @@ function love.load()
 	setupMapView()
 	setupTileset()
 	love.graphics.setFont(12)
+	
+    camerapos = vector(0,0)
+    camera1 = camera(camerapos, .75, 0)
+
+	
 end
 
 
@@ -28,19 +35,10 @@ function setupMap()
 
 	map = {}
 	
-	for x=1,mapWidth do
-		map[x] = {}
-		for y=1,mapHeight do
-			map[x][y] = 0 -- all grass, yo!
-			if y == 12 then
-				map[x][y] = 1 -- except for some sidewalk, of course 
-				
-			end
-		end
-	end
-	
 
+	
 end
+
 
 function setupMapView()
 	mapX = 1
@@ -51,6 +49,7 @@ function setupMapView()
 	zoomX = 1
 	zoomY = 1
 end
+
 
 function setupTileset()
 	tilesetImage = love.graphics.newImage( "tileset.png" )
@@ -78,7 +77,9 @@ function setupTileset()
   updateTilesetBatch()
 end
 
+
 function updateTilesetBatch()
+
 	tilesetBatch:clear()
 	for x=0, tilesDisplayWidth-1 do
 		for y=0, tilesDisplayHeight-1 do
@@ -86,39 +87,49 @@ function updateTilesetBatch()
 				x*tileSize, y*tileSize)
 		end
 	end
-	tilesetBatch:addq(tileQuads[4],12, 12)
+
+    tilesetBatch:addq(tileQuads[4], 300, 200)
+
 end
--- central function for moving the map
+
+
 function moveMap(dx, dy)
-	oldMapX = mapX
-	oldMapY = mapY
-	mapX = math.max(math.min(mapX + dx, mapWidth - tilesDisplayWidth), 1)
-	mapY = math.max(math.min(mapY + dy, mapHeight - tilesDisplayHeight), 1)
-	-- only update if we actually moved
-	if math.floor(mapX) ~= math.floor(oldMapX) or math.floor(mapY) ~= math.floor(oldMapY) then
-		updateTilesetBatch()
-	end
+	
+	
+	
 end
+
 
 function love.update(dt)
+
 	TEsound.cleanup()
-	if love.keyboard.isDown("up")  then
-		moveMap(0, -0.2 * tileSize * dt)
-	end
-	if love.keyboard.isDown("down")  then
-		moveMap(0, 0.2 * tileSize * dt)
-	end
+	-- if love.keyboard.isDown("up")  then
+		-- temp = vector(0,-2)
+		-- camera1:translate(temp)
+	-- end
+	-- if love.keyboard.isDown("down")  then
+        -- temp = vector(0,2)
+		-- camera1:translate(temp)
+	-- end
 	if love.keyboard.isDown("left")  then
-		moveMap(-0.2 * tileSize * dt, 0)
+        temp = vector(-2,0)
+		camera1:translate(temp)
 	end
 	if love.keyboard.isDown("right")  then
-		moveMap(0.2 * tileSize * dt, 0)
+        temp = vector(2, 0)
+		camera1:translate(temp)
 	end
+
 end
 
+
 function love.draw()
+
+    camera1:predraw()
 	love.graphics.draw(tilesetBatch,
 		math.floor(-zoomX*(mapX%1)*tileSize), math.floor(-zoomY*(mapY%1)*tileSize),
 		0, zoomX, zoomY)
+	camera1:postdraw()
 	love.graphics.print("FPS: "..love.timer.getFPS(), 10, 20)
+	
 end
