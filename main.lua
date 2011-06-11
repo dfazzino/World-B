@@ -41,7 +41,7 @@ function setupMap()
 	
 
 end
-
+gdfgdfg
 function setupMapView()
 	mapX = 1
 	mapY = 1
