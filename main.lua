@@ -81,12 +81,12 @@ end
 function updateTilesetBatch()
 
 	tilesetBatch:clear()
-	for x=0, tilesDisplayWidth-1 do
-		for y=0, tilesDisplayHeight-1 do
-			tilesetBatch:addq(tileQuads[map[x+math.floor(mapX)][y+math.floor(mapY)]],
-				x*tileSize, y*tileSize)
-		end
-	end
+	-- for x=0, tilesDisplayWidth-1 do
+		-- for y=0, tilesDisplayHeight-1 do
+			-- tilesetBatch:addq(tileQuads[map[x+math.floor(mapX)][y+math.floor(mapY)]],
+				-- x*tileSize, y*tileSize)
+		-- end
+	-- end
 
     tilesetBatch:addq(tileQuads[4], 300, 200)
 
