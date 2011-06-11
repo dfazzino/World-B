@@ -1,6 +1,7 @@
 require "TEsound"
 require "camera"
 require "vector"
+require "map"
 
 local map -- stores tiledata
 local mapWidth, mapHeight -- width and height in tiles
@@ -16,12 +17,14 @@ local tileQuads = {} -- parts of the tileset used for different tiles
 local tilesetSprite
 
 function love.load()
-	TEsound.playLooping("DAVland theme.mp3", "music")
+	--TEsound.playLooping("DAVland theme.mp3", "music")
 	setupMap()
 	setupMapView()
 	setupTileset()
 	love.graphics.setFont(12)
 	
+	e = generatemap()
+
     camerapos = vector(0,0)
     camera1 = camera(camerapos, .75, 0)
 
