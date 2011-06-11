@@ -21,6 +21,7 @@ function love.load()
 	love.graphics.setFont(12)
 end
 
+
 function setupMap()
 	mapWidth = 100
 	mapHeight = 20
