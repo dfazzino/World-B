@@ -16,7 +16,7 @@ local tileQuads = {} -- parts of the tileset used for different tiles
 local tilesetSprite
 
 function love.load()
-	--TEsound.playLooping("DAVland theme.mp3", "music")
+	TEsound.playLooping("DAVland theme.mp3", "music")
 	setupMap()
 	setupMapView()
 	setupTileset()
