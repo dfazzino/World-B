@@ -41,7 +41,7 @@ function setupMap()
 	
 
 end
-
+11123123
 function setupMapView()
 	mapX = 1
 	mapY = 1
