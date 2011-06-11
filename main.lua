@@ -41,7 +41,7 @@ function setupMap()
 	
 
 end
-
+test123
 function setupMapView()
 	mapX = 1
 	mapY = 1
