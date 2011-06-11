@@ -21,7 +21,6 @@ function love.load()
 	love.graphics.setFont(12)
 end
 
--- testing this rep
 
 function setupMap()
 	mapWidth = 100
