@@ -21,6 +21,7 @@ function GenerateAnObject(gameobject)
 	width		= gameobject.width
 	height		= gameobject.height
 	angle		= gameobject.angle
+	friction	= gameobject.friction
 
 	-- objtype		= "test type"
 	-- x		= 300
@@ -49,6 +50,7 @@ function GenerateAnObject(gameobject)
 	body = love.physics.newBody(world, x, y, mass, inertia)
 	shape = love.physics.newRectangleShape(body, 0, 0, width, height, angle) -- x,y = 0 because body anchors to center of shape
 	shape:setData(objtype)
+	shape:setFriction(friction)
 	
 	table.insert(bodies, body)
 	table.insert(shapes, shape)
