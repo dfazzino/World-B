@@ -9,20 +9,28 @@ function generatemap()
 	e = love.filesystem.exists( "map.dat" )
 
 	if e == true then	
-		contents, size = love.filesystem.read( "map.dat", 19 )
+		contents, size = love.filesystem.read( "map.dat", 22 )
+	end
+	gameobject = {}
+	objecttype =  string.sub(contents,1,1)
+	parsex = 0
+	for token in string.gmatch(contents, "[^%s]+") do
+		if parsex == 0 then gameobject.type = token
+		elseif parsex == 1 then gameobject.x = token
+		elseif parsex == 2 then gameobject.y = token
+		elseif parsex == 3 then gameobject.mass = token
+		elseif parsex == 4 then gameobject.inertia = token
+		elseif parsex == 5 then gameobject.width = token
+		elseif parsex == 6 then gameobject.height = token
+		elseif parsex == 7 then gameobject.angle = token
+		
+		end
+		print (parsex)
+		parsex = parsex + 1
+
 	end
 
-	objecttype =  string.sub(contents,1,1)
-
-
-		gameobject = {}
-		gameobject.type = string.sub(contents,1,1)
-		gameobject.x = string.sub(contents,2,6)
-		gameobject.y = string.sub(contents,7,11)
-		gameobject.mass = string.sub(contents,12,15)
-		gameobject.size = string.sub(contents,16,19)
-
-		GenerateAnObject(gameobject)
+	GenerateAnObject(gameobject)
 
 	return e
 end
