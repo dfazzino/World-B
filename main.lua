@@ -23,7 +23,7 @@ function love.load()
 	setupMapView()
 	setupTileset()
 	love.graphics.setFont(12)
-	
+	CreateWorld()
 	e = generatemap()
 
     camerapos = vector(0,0)
