@@ -6,6 +6,8 @@ map = {}
 
 function generatemap()
 
+	CreateWorld()
+	
 	e = love.filesystem.exists( "map.dat" )
 
 	if e == true then	

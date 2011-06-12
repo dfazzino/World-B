@@ -23,8 +23,8 @@ function GenerateAnObject(gameobject)
 	angle		= gameobject.angle
 
 	-- objtype		= "test type"
-	-- xpos		= 300
-	-- ypos 		= 300
+	-- x		= 300
+	-- y 		= 300
 	-- mass 		= 10
 	-- inertia 	= 0
 	-- width		= 100
@@ -35,8 +35,8 @@ function GenerateAnObject(gameobject)
 	
 	print(	"you sent me an object " 	
 			.. objtype 
-			.. " (x=" 		.. xpos 
-			.. ", y=" 		.. ypos 
+			.. " (x=" 		.. x 
+			.. ", y=" 		.. y 
 			.. ", mass=" 	.. mass 
 			.. ", inertia=" .. inertia 
 			.. ", width=" 	.. width 
@@ -46,7 +46,7 @@ function GenerateAnObject(gameobject)
 			)
 
 	-- function should add new items to table intellegently (index)
-	bodies[0] = love.physics.newBody(world, xpos, ypos, mass, inertia)
+	bodies[0] = love.physics.newBody(world, x, y, mass, inertia)
 	shapes[0] = love.physics.newRectangleShape(bodies[0], 0, 0, width, height, angle) -- x,y = 0 because body anchors to center of shape
 	shapes[0]:setData(objtype)
 
