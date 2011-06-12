@@ -14,8 +14,7 @@ function generatemap()
 		gameobject = {}
 		objecttype =  string.sub(contents,1,1)
 		parsex = 0
-		print (contents)
-		debug.debug()
+
 		for token in string.gmatch(contents, "[^%s]+") do
 			if token == 'N' then 
 				if gameobject.x ~= nil then
