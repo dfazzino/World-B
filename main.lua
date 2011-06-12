@@ -103,6 +103,8 @@ end
 
 
 function love.update(dt)
+	
+	world:update(dt)
 
 	TEsound.cleanup()
 	-- if love.keyboard.isDown("up")  then
