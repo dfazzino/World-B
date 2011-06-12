@@ -22,7 +22,7 @@ function GenerateAnObject(gameobject)
 	height		= gameobject.height
 	angle		= gameobject.angle
 	friction	= gameobject.friction
-
+	
 	-- objtype		= "test type"
 	-- x		= 300
 	-- y 		= 300
@@ -43,6 +43,7 @@ function GenerateAnObject(gameobject)
 			.. ", width=" 	.. width 
 			.. ", height=" 	.. height
 			.. ", angle=" 	.. angle
+			.. ", friction=" 	.. friction
 			.. ")"
 			)
 
