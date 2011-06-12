@@ -2,6 +2,7 @@ require "TEsound"
 require "camera"
 require "vector"
 require "map"
+require "physicsg" -- this might be temporary, just to draw objects from bodies/shapes
 
 local map -- stores tiledata
 local mapWidth, mapHeight -- width and height in tiles
@@ -133,18 +134,19 @@ function love.draw()
 	love.graphics.draw(tilesetBatch,
 		math.floor(-zoomX*(mapX%1)*tileSize), math.floor(-zoomY*(mapY%1)*tileSize),
 		0, zoomX, zoomY)
-	camera1:postdraw()
-	love.graphics.print("FPS: "..love.timer.getFPS(), 10, 20)
-	
+		
 	-- START temporary code to draw some shapes
-	
-	local x1, y1, x2, y2, x3, y3, x4, y4 = shapes[0]:getBoundingBox() --get the x,y coordinates of all 4 corners of the box.
-	local boxwidth = x3 - x2 --calculate the width of the box
-	local boxheight = y2 - y1 --calculate the height of the box
-	
-	love.graphics.setColor(72, 160, 14) --set the drawing color to green for the ground
-	love.graphics.rectangle("fill", bodies[0]:getX() - boxwidth/2, bodies[0]:getY() - boxheight/2, boxwidth, boxheight)
+	for i,s in pairs(shapes) do
+		x1, y1, x2, y2, x3, y3, x4, y4 = s:getBoundingBox() --get the x,y coordinates of all 4 corners of the box.
+		boxwidth = x3 - x2 --calculate the width of the box
+		boxheight = y2 - y1 --calculate the height of the box
+		
+		love.graphics.setColor(72, 160, 14) --set the drawing color to green for the ground
+		love.graphics.rectangle("fill", s:getBody():getX() - boxwidth/2, s:getBody():getY() - boxheight/2, boxwidth, boxheight)
+	end
 	
 	-- END temporary code to draw some shapes
 	
+	camera1:postdraw()
+	love.graphics.print("FPS: "..love.timer.getFPS(), 10, 20)
 end
