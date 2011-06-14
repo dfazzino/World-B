@@ -71,13 +71,13 @@ function love.keypressed(key, unicode)
 			if key == "up" then -- double jumping still effect
 				s:getBody():applyImpulse(0,-175)
 			end
-			if key == "left" then
-				playerDistanceChange = -150
-			end
-			if key == "right" then
-				playerDistanceChange = 150
-			end
 		end
+	end
+	if key == "left" then
+		playerDistanceChange = -150
+	end
+	if key == "right" then
+		playerDistanceChange = 150
 	end
 end
 
