@@ -116,15 +116,19 @@ function love.update(dt)
         -- temp = vector(0,2)
 		-- camera1:translate(temp)
 	-- end
-	if love.keyboard.isDown("left")  then
-        temp = vector(-2,0)
+	if love.keyboard.isDown("a")  then
+        temp = vector(-3,0)
 		camera1:translate(temp)
 	end
-	if love.keyboard.isDown("right")  then
-        temp = vector(2, 0)
+	if love.keyboard.isDown("d")  then
+        temp = vector(3, 0)
 		camera1:translate(temp)
 	end
 
+	if playerDistanceChange ~= 0 and (playerDistanceChange * dt) ~= 0 then
+		bodies[1]:applyImpulse(playerDistanceChange * dt, 0)
+	end
+	
 end
 
 
@@ -141,7 +145,17 @@ function love.draw()
 		boxwidth = x3 - x2 --calculate the width of the box
 		boxheight = y2 - y1 --calculate the height of the box
 		
-		love.graphics.setColor(72, 160, 14) --set the drawing color to green for the ground
+		if s:getData() == "0" then -- 0 = player, for now!  and.. that 0 is apparently a string
+			love.graphics.setColor(255, 0, 0) -- red for mother russia.. i mean the player
+		else if s:getData() == "1" then -- 1 = ground, dawg
+			love.graphics.setColor(72, 160, 14) -- green ground
+		else if s:getData() == "2" then -- 2 = ice ice, baby
+			love.graphics.setColor(175, 175, 255) -- icey blue
+		else
+			love.graphics.setColor(125, 125, 125) -- undefined grey :|
+		end
+		end
+		end
 		love.graphics.rectangle("fill", s:getBody():getX() - boxwidth/2, s:getBody():getY() - boxheight/2, boxwidth, boxheight)
 	end
 	
