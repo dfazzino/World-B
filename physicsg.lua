@@ -60,20 +60,24 @@ end
 playerDistanceChange = 0
 
 function love.keypressed(key, unicode)
-	x2, y2 = bodies[1]:getLinearVelocity()
 
-	if key == "escape" then -- this just doesn't work if you're falling into absolute oblivion :)
-		bodies[1]:setX(150)
-		bodies[1]:setY(-100)
-	end
-	if key == "up" and y2 < 1 then -- double jumping still effect
-		bodies[1]:applyImpulse(0,-175)
-	end
-	if key == "left" then
-		playerDistanceChange = -150
-	end
-	if key == "right" then
-		playerDistanceChange = 150
+	for i,s in pairs(shapes) do
+		if s:getData() == "0" then -- player
+			
+			if key == "escape" then -- this just doesn't work if you're falling into absolute oblivion :)
+				s:getBody():setX(150)
+				s:getBody():setY(-100)
+			end
+			if key == "up" then -- double jumping still effect
+				s:getBody():applyImpulse(0,-175)
+			end
+			if key == "left" then
+				playerDistanceChange = -150
+			end
+			if key == "right" then
+				playerDistanceChange = 150
+			end
+		end
 	end
 end
 
