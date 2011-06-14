@@ -125,6 +125,10 @@ function love.update(dt)
 		camera1:translate(temp)
 	end
 
+	if playerDistanceChange ~= 0 and (playerDistanceChange * dt) ~= 0 then
+		bodies[1]:applyImpulse(playerDistanceChange * dt, 0)
+	end
+	
 end
 
 
@@ -141,7 +145,11 @@ function love.draw()
 		boxwidth = x3 - x2 --calculate the width of the box
 		boxheight = y2 - y1 --calculate the height of the box
 		
-		love.graphics.setColor(72, 160, 14) --set the drawing color to green for the ground
+		if s:getData() == "0" then -- 0 = player, for now!  and.. that 0 is apparently a string
+			love.graphics.setColor(255, 0, 0) --set the drawing color to red for mother russia.. i mean the player
+		else
+			love.graphics.setColor(72, 160, 14) --set the drawing color to green for the ground
+		end
 		love.graphics.rectangle("fill", s:getBody():getX() - boxwidth/2, s:getBody():getY() - boxheight/2, boxwidth, boxheight)
 	end
 	

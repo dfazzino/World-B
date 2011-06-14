@@ -56,3 +56,32 @@ function GenerateAnObject(gameobject)
 	table.insert(bodies, body)
 	table.insert(shapes, shape)
 end
+
+playerDistanceChange = 0
+
+function love.keypressed(key, unicode)
+	x2, y2 = bodies[1]:getLinearVelocity()
+
+	if key == "escape" then -- this just doesn't work if you're falling into absolute oblivion :)
+		bodies[1]:setX(150)
+		bodies[1]:setY(-100)
+	end
+	if key == "up" and y2 < 1 then -- double jumping still effect
+		bodies[1]:applyImpulse(0,-175)
+	end
+	if key == "left" then
+		playerDistanceChange = -150
+	end
+	if key == "right" then
+		playerDistanceChange = 150
+	end
+end
+
+function love.keyreleased(key, unicode)
+	if key == "left" then
+		playerDistanceChange = 0
+	end
+	if key == "right" then
+		playerDistanceChange = 0
+	end
+end
