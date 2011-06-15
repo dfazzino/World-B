@@ -1,11 +1,11 @@
 --parses and holds map data, gives enemy.lua data
 --future: gives data to the following: maplogic, objects, items
-require "physicsg"
+
 
 map = {}
 
 function generatemap()
-	
+
 	e = love.filesystem.exists( "map.dat" )
 
 
@@ -16,9 +16,12 @@ function generatemap()
 		parsex = 0
 
 		for token in string.gmatch(contents, "[^%s]+") do
-			if token == 'N' then 
+			if token == 'N' or token == 'E' or token == 'X' then 
 				if gameobject.x ~= nil then
-					GenerateAnObject(gameobject)
+					objIndex = GenerateAnObject(gameobject)
+                    if token == 'E' then
+                        CreateAnEnemy(gameobject, objIndex)
+                    end
 				end
 				objecttype = {}
 				parsex = 0
@@ -35,8 +38,7 @@ function generatemap()
 				end
 				parsex = parsex + 1
 			end
-			
+
 		end
-		GenerateAnObject(gameobject)
 	return e
 end
