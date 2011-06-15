@@ -3,6 +3,8 @@ bodies = {} -- i guess these need to be global?
 shapes = {}
 world = nil
 
+objectIndex = 0
+
 function CreateWorld()
 	world = love.physics.newWorld(-650, -650, 650, 650)  -- how big is the world, anyway?
 	world:setGravity(0, 700)
@@ -12,6 +14,9 @@ end
 function GenerateAnObject(gameobject)
 
 	--x, y, mass, inertia, width, height, angle
+
+    thisIndex = objectIndex
+    objectIndex = objectIndex + 1
 
 	objtype		= gameobject.type
 	x			= gameobject.x
@@ -53,8 +58,11 @@ function GenerateAnObject(gameobject)
 	shape:setData(objtype)
 	shape:setFriction(friction)
 	
-	table.insert(bodies, body)
-	table.insert(shapes, shape)
+	table.insert(bodies,thisIndex, body)
+	table.insert(shapes,thisIndex, shape)
+
+    return thisIndex
+
 end
 
 playerDistanceChange = 0
@@ -88,4 +96,13 @@ function love.keyreleased(key, unicode)
 	if key == "right" then
 		playerDistanceChange = 0
 	end
+end
+
+
+function ApplyImpulse(i, ximpulse, yimpulse)
+
+    -- debug.debug()
+
+    bodies[i]:applyImpulse(ximpulse, yimpulse)
+
 end

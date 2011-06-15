@@ -1,6 +1,7 @@
 require "TEsound"
 require "camera"
 require "vector"
+require "enemies"
 require "map"
 require "physicsg" -- this might be temporary, just to draw objects from bodies/shapes
 
@@ -128,6 +129,7 @@ function love.update(dt)
 	if playerDistanceChange ~= 0 and (playerDistanceChange * dt) ~= 0 then
 		bodies[1]:applyImpulse(playerDistanceChange * dt, 0)
 	end
+    MoveEnemies ()
 	
 end
 
@@ -144,15 +146,16 @@ function love.draw()
 		x1, y1, x2, y2, x3, y3, x4, y4 = s:getBoundingBox() --get the x,y coordinates of all 4 corners of the box.
 		boxwidth = x3 - x2 --calculate the width of the box
 		boxheight = y2 - y1 --calculate the height of the box
-		
+
+		love.graphics.setColor(125, 125, 125) -- undefined grey :|
+
 		if s:getData() == "0" then -- 0 = player, for now!  and.. that 0 is apparently a string
 			love.graphics.setColor(255, 0, 0) -- red for mother russia.. i mean the player
 		else if s:getData() == "1" then -- 1 = ground, dawg
 			love.graphics.setColor(72, 160, 14) -- green ground
 		else if s:getData() == "2" then -- 2 = ice ice, baby
 			love.graphics.setColor(175, 175, 255) -- icey blue
-		else
-			love.graphics.setColor(125, 125, 125) -- undefined grey :|
+  			
 		end
 		end
 		end

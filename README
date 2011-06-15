@@ -1,1 +1,8 @@
 World B says:  All your Material A are belong to us.
+
+6/15/11 1:00 Commit notes:
+
+Added an E item to the map.dat file.  
+Added code to map.lua in generatemap() to send enemy data over to enemy.lua
+Added CreateEnemy() to enemy.lua to create entries in the enemy table for AI processing.  Also added code to call ApplyImpulse() in physicsg.
+Added code to physicsg; changed table.insert for bodies and shapes to include a manually set index.  This index is utilized in this commit by enemy:MoveEnemies() to shoot an enemy clear off the left of the map where nobody will see it again.  Basically the easiest enemy ever.
