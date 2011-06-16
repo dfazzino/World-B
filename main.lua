@@ -111,12 +111,10 @@ function love.update(dt)
         temp = vector(3, 0)
 		camera1:translate(temp)
 	end
-	
-	MovePlayer(dt)
-	
+		
 	PlayerKeyDown(dt)
 
-    MoveEnemies ()
+    MoveEnemies(dt)
 end
 
 function love.keypressed(key, unicode)

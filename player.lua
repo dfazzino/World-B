@@ -1,34 +1,18 @@
-player = {}
+player = nil
 
-function MovePlayer(dt)
-
-	for i,s in pairs(shapes) do
-		if s:getData() == "0" then -- player
-			
-			if key == "escape" then -- this just doesn't work if you're falling into absolute oblivion :)
-				bodies[i]:setX(150)
-				bodies[i]:setY(-100)
-			end
-			if key == "up" then -- double jumping still effect
-				ApplyImpulse(i,0,-175)
-			end
-		end
-	end
+function CreatePlayer(objIndex)
+	player = objIndex
+	print ("player = " .. player)
 end
 
 function PlayerKeyPressed(key)
-
-	for i,s in pairs(shapes) do
-		if s:getData() == "0" then -- player
 			
-			if key == "escape" then -- this just doesn't work if you're falling into absolute oblivion :)
-				bodies[i]:setX(150)
-				bodies[i]:setY(-100)
-			end
-			if key == "up" then -- double jumping still effect
-				ApplyImpulse(i,0,-175)
-			end
-		end
+	if key == "escape" then -- this just doesn't work if you're falling into absolute oblivion :)
+		bodies[player]:setX(150)
+		bodies[player]:setY(-100)
+	end
+	if key == "up" then -- double jumping still effect
+		ApplyImpulse(player,0,-175)
 	end
 end
 
@@ -37,15 +21,11 @@ end
 
 function PlayerKeyDown(dt)
 
-	for i,s in pairs(shapes) do
-		if s:getData() == "0" then -- player
-
-			if love.keyboard.isDown("left") then -- this seems to work OK!
-				ApplyImpulse(i,-150*dt,0)
-			end
-			if love.keyboard.isDown("right") then
-				ApplyImpulse(i,150*dt,0)
-			end
-		end
+	if love.keyboard.isDown("left") then -- this seems to work OK!
+		ApplyImpulse(player,-150*dt,0)
 	end
+	if love.keyboard.isDown("right") then
+		ApplyImpulse(player,150*dt,0)
+	end
+
 end

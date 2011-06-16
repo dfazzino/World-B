@@ -26,17 +26,17 @@ function GenerateAnObject(gameobject)
 	angle		= gameobject.angle
 	friction	= gameobject.friction
 
-	print(	"you sent me an object " 	
+	print(	"Created obj " 	
 			.. objtype 
 			.. " (x=" 		.. x 
 			.. ", y=" 		.. y 
-			.. ", mass=" 	.. mass 
-			.. ", inertia=" .. inertia 
-			.. ", width=" 	.. width 
-			.. ", height=" 	.. height
-			.. ", angle=" 	.. angle
-			.. ", friction=" 	.. friction
-			.. ", thisIndex=" 	.. thisIndex
+			.. ", m=" 	.. mass 
+			.. ", i=" .. inertia 
+			.. ", w=" 	.. width 
+			.. ", h=" 	.. height
+			.. ", a=" 	.. angle
+			.. ", f=" 	.. friction
+			.. ", idx=" 	.. thisIndex
 			.. ")"
 			)
 
@@ -46,8 +46,8 @@ function GenerateAnObject(gameobject)
 	shape:setData(objtype)
 	shape:setFriction(friction)
 	
-	table.insert(bodies,thisIndex, body)
-	table.insert(shapes,thisIndex, shape)
+	bodies[thisIndex] = body 
+	shapes[thisIndex] = shape
 
     return thisIndex
 
