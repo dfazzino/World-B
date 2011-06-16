@@ -36,6 +36,7 @@ function GenerateAnObject(gameobject)
 			.. ", height=" 	.. height
 			.. ", angle=" 	.. angle
 			.. ", friction=" 	.. friction
+			.. ", thisIndex=" 	.. thisIndex
 			.. ")"
 			)
 
