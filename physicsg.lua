@@ -13,8 +13,6 @@ end
 
 function GenerateAnObject(gameobject)
 
-	--x, y, mass, inertia, width, height, angle
-
     thisIndex = objectIndex
     objectIndex = objectIndex + 1
 
@@ -27,17 +25,6 @@ function GenerateAnObject(gameobject)
 	height		= gameobject.height
 	angle		= gameobject.angle
 	friction	= gameobject.friction
-	
-	-- objtype		= "test type"
-	-- x		= 300
-	-- y 		= 300
-	-- mass 		= 10
-	-- inertia 	= 0
-	-- width		= 100
-	-- height		= 20
-	-- angle		= 0
-
-
 
 	print(	"you sent me an object " 	
 			.. objtype 
@@ -64,40 +51,6 @@ function GenerateAnObject(gameobject)
     return thisIndex
 
 end
-
-playerDistanceChange = 0
-
-function love.keypressed(key, unicode)
-
-	for i,s in pairs(shapes) do
-		if s:getData() == "0" then -- player
-			
-			if key == "escape" then -- this just doesn't work if you're falling into absolute oblivion :)
-				s:getBody():setX(150)
-				s:getBody():setY(-100)
-			end
-			if key == "up" then -- double jumping still effect
-				s:getBody():applyImpulse(0,-175)
-			end
-		end
-	end
-	if key == "left" then
-		playerDistanceChange = -150
-	end
-	if key == "right" then
-		playerDistanceChange = 150
-	end
-end
-
-function love.keyreleased(key, unicode)
-	if key == "left" then
-		playerDistanceChange = 0
-	end
-	if key == "right" then
-		playerDistanceChange = 0
-	end
-end
-
 
 function ApplyImpulse(i, ximpulse, yimpulse)
 

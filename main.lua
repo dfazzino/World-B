@@ -4,6 +4,8 @@ require "vector"
 require "enemies"
 require "map"
 require "physicsg" -- this might be temporary, just to draw objects from bodies/shapes
+require "player"
+require "buildspritebatch"
 
 local map -- stores tiledata
 local mapWidth, mapHeight -- width and height in tiles
@@ -29,7 +31,6 @@ function love.load()
 
     camerapos = vector(0,0)
     camera1 = camera(camerapos, .75, 0)
-	
 end
 
 
@@ -38,9 +39,6 @@ function setupMap()
 	mapHeight = 20
 
 	map = {}
-	
-
-	
 end
 
 
@@ -93,14 +91,9 @@ function updateTilesetBatch()
 	-- end
 
     tilesetBatch:addq(tileQuads[4], 300, 200)
-
 end
 
-
 function moveMap(dx, dy)
-	
-	
-	
 end
 
 
@@ -109,14 +102,7 @@ function love.update(dt)
 	world:update(dt)
 
 	TEsound.cleanup()
-	-- if love.keyboard.isDown("up")  then
-		-- temp = vector(0,-2)
-		-- camera1:translate(temp)
-	-- end
-	-- if love.keyboard.isDown("down")  then
-        -- temp = vector(0,2)
-		-- camera1:translate(temp)
-	-- end
+
 	if love.keyboard.isDown("a")  then
         temp = vector(-3,0)
 		camera1:translate(temp)
@@ -125,14 +111,21 @@ function love.update(dt)
         temp = vector(3, 0)
 		camera1:translate(temp)
 	end
-
-	if playerDistanceChange ~= 0 and (playerDistanceChange * dt) ~= 0 then
-		bodies[1]:applyImpulse(playerDistanceChange * dt, 0)
-	end
-    MoveEnemies ()
 	
+	MovePlayer(dt)
+	
+	PlayerKeyDown(dt)
+
+    MoveEnemies ()
 end
 
+function love.keypressed(key, unicode)
+	PlayerKeyPressed(key)
+end
+
+function love.keyreleased(key, unicode)
+	PlayerKeyReleased(key)
+end
 
 function love.draw()
 
@@ -141,28 +134,7 @@ function love.draw()
 		math.floor(-zoomX*(mapX%1)*tileSize), math.floor(-zoomY*(mapY%1)*tileSize),
 		0, zoomX, zoomY)
 		
-	-- START temporary code to draw some shapes
-	for i,s in pairs(shapes) do
-		x1, y1, x2, y2, x3, y3, x4, y4 = s:getBoundingBox() --get the x,y coordinates of all 4 corners of the box.
-		boxwidth = x3 - x2 --calculate the width of the box
-		boxheight = y2 - y1 --calculate the height of the box
-
-		love.graphics.setColor(125, 125, 125) -- undefined grey :|
-
-		if s:getData() == "0" then -- 0 = player, for now!  and.. that 0 is apparently a string
-			love.graphics.setColor(255, 0, 0) -- red for mother russia.. i mean the player
-		else if s:getData() == "1" then -- 1 = ground, dawg
-			love.graphics.setColor(72, 160, 14) -- green ground
-		else if s:getData() == "2" then -- 2 = ice ice, baby
-			love.graphics.setColor(175, 175, 255) -- icey blue
-  			
-		end
-		end
-		end
-		love.graphics.rectangle("fill", s:getBody():getX() - boxwidth/2, s:getBody():getY() - boxheight/2, boxwidth, boxheight)
-	end
-	
-	-- END temporary code to draw some shapes
+	temporarilyDrawSomeThings()
 	
 	camera1:postdraw()
 	love.graphics.print("FPS: "..love.timer.getFPS(), 10, 20)
