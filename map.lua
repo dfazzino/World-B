@@ -1,9 +1,3 @@
---parses and holds map data, gives enemy.lua data
---future: gives data to the following: maplogic, objects, items
-
-
-map = {}
-
 function generatemap()
 
 	e = love.filesystem.exists( "map.dat" )
@@ -22,6 +16,9 @@ function generatemap()
                     if token == 'E' then
                         CreateAnEnemy(gameobject, objIndex)
                     end
+                    if token == 'P' then
+                        CreatePlayer(gameobject, objIndex)
+                    end
 				end
 				objecttype = {}
 				parsex = 0
@@ -34,7 +31,7 @@ function generatemap()
 				elseif parsex == 5 then gameobject.width = token
 				elseif parsex == 6 then gameobject.height = token
 				elseif parsex == 7 then gameobject.angle = token
-				elseif parsex == 8 then gameobject.friction = token
+				elseif parsex == 8 then gameobject.friction = token 
 				end
 				parsex = parsex + 1
 			end
