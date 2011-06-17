@@ -1,18 +1,16 @@
 enemies = {}
 
-function CreateAnEnemy(gameObject, objIndex)
+function CreateAnEnemy(objIndex)
 
-    enemy = {}
-
-    enemy[0] = gameObject
-    enemy[0].objIndex = objIndex
-
+   	table.insert(enemies, objIndex)
+	print ("added to enemies = " .. objIndex)
 end
 
-    
-function MoveEnemies ()
+function MoveEnemies (dt)
 
-    ApplyImpulse(0, -10, 0)
+	for i,enemy in pairs(enemies) do
+		ApplyImpulse(enemy, math.random(-1000,1000)*dt, 0)
+	end
 
 end
 
