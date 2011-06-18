@@ -1,8 +1,23 @@
 World B says:  All your Material A are belong to us.
 
-6/15/11 1:00 Commit notes:
+I screwed up the commit notes again, so here I am, making a fool out of myself in README again.
 
-Added an E item to the map.dat file.  
-Added code to map.lua in generatemap() to send enemy data over to enemy.lua
-Added CreateEnemy() to enemy.lua to create entries in the enemy table for AI processing.  Also added code to call ApplyImpulse() in physicsg.
-Added code to physicsg; changed table.insert for bodies and shapes to include a manually set index.  This index is utilized in this commit by enemy:MoveEnemies() to shoot an enemy clear off the left of the map where nobody will see it again.  Basically the easiest enemy ever.
+6/18/11 5pm Commit notes, actually this is just a manual for the map editor:
+
+to pause the action, hit the '`' button on your keyboard three times.
+to change what you are drawing, hit the right mouse button
+drawing occurs in this order:
+1) player, which doesn't work so you'll have to add a player to the map manually
+2) enemies
+3) ground
+4) ice
+
+to save, hit S button on your keyboard.
+
+there is no way to delete anything once it is placed, and there is no way to stop drawing a ground/ice once it is in action.  you're stuck with it.  drawing too small will cause the whole thing to fail.  also, i don't know why it doesn't draw ground and ice where you actually drew it... ver .00004 will address this proble.
+
+when you save a map, it will appear in C:\Documents and Settings\[user]\Application Data\LOVE\World-B\TEXT.TXT
+
+If you want to start over, just delete this file.  Don't delete the TEXT.TXT in the program files\love\world-b directory though, unless you want to change the filename in map.lua.
+
+THAT IS ALL GOOD DAY TO YOU.
