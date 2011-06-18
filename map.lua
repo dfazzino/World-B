@@ -3,7 +3,7 @@ function generatemap()
 	e = love.filesystem.exists( "map.dat" )
 
 
-	contents, size = love.filesystem.read( "map.dat")
+	contents, size = love.filesystem.read( "TEST.TXT")
 
 		gameobject = {}
 		parsex = 0
@@ -36,4 +36,28 @@ function generatemap()
 
 		end
 	return e
+end
+
+
+function writemap ()
+
+	writex = 0
+	file = love.filesystem.newFile("TEST.TXT")
+	ok = file:open('w')
+	-- print (ok)
+	-- contents = file:read()
+	-- print (contents) 
+	-- debug.debug()
+	-- repeat
+		
+		writeObject = GetObject(writex)
+		print(writeObject)
+		if writeObject ~= false then
+			-- debug.debug()
+			file:write(writeObject)
+		end
+		
+	-- until object = false
+	file:close()
+	
 end

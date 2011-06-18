@@ -1,4 +1,5 @@
 player = nil
+maprun = 0
 
 function CreatePlayer(objIndex)
 	player = objIndex
@@ -17,6 +18,25 @@ function PlayerKeyPressed(key)
 end
 
 function PlayerKeyReleased(key)
+	print(key)
+	-- debug.debug()
+	
+	if key == "s" then	
+		writemap()
+	end
+	if key == '`' then
+		maprun = maprun + 1
+		
+		if maprun == 3 then
+			RunGame(false)
+		end
+		if maprun == 4 then
+			RunGame(true)
+			maprun = 0
+		end
+	end
+		
+	
 end
 
 function PlayerKeyDown(dt)

@@ -2,6 +2,7 @@ require "TEsound"
 require "camera"
 require "vector"
 require "enemies"
+require "drawmap"
 require "map"
 require "physicsg" -- this might be temporary, just to draw objects from bodies/shapes
 require "player"
@@ -19,6 +20,8 @@ local tilesetImage
 local tileSize -- size of tiles in pixels
 local tileQuads = {} -- parts of the tileset used for different tiles
 local tilesetSprite
+
+local worldupdate = true
 
 function love.load()
 	--TEsound.playLooping("DAVland theme.mp3", "music")
@@ -97,9 +100,18 @@ function moveMap(dx, dy)
 end
 
 
+function RunGame(runbool)
+
+	worldupdate = runbool
+	debug.debug()
+end
+
+
 function love.update(dt)
 	
-	world:update(dt)
+	if worldupdate == true then
+		world:update(dt)
+	end
 
 	TEsound.cleanup()
 
@@ -113,8 +125,8 @@ function love.update(dt)
 	end
 		
 	PlayerKeyDown(dt)
-
     MoveEnemies(dt)
+	ContinueDrawing(CheckMouse())
 end
 
 function love.keypressed(key, unicode)

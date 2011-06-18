@@ -1,10 +1,11 @@
 --sets up tiles, builds game graphics based on data in various places
 
-function temporarilyDrawSomeThings()
+function temporarilyDrawSomeThings(isLeftMouseDown)
 	
 	drawPlayer()
 	drawEnemies()
 	drawGround()
+	TempDraw()
 end
 
 function drawPlayer()
@@ -47,3 +48,22 @@ function drawGround()
 		end
 	end
 end
+
+
+function TempDraw ()
+
+		tempDrawing, Sx, Sy, Sw, Sh = GetDrawingCoords()
+
+		if tempDrawing == 3 then
+			love.graphics.setColor(72, 160, 14) -- green ground
+			love.graphics.rectangle("fill", tempDrawingSx, tempDrawingSy, tempDrawingSw, tempDrawingSh)
+		end
+	    if tempDrawing == 4 then
+			love.graphics.setColor(175, 175, 255) -- icey blue
+			love.graphics.rectangle("fill", tempDrawingSx, tempDrawingSy, tempDrawingSw, tempDrawingSh)
+		end
+		
+	-- end
+
+end
+

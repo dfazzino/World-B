@@ -60,3 +60,28 @@ function ApplyImpulse(i, ximpulse, yimpulse)
     bodies[i]:applyImpulse(ximpulse, yimpulse)
 
 end
+
+
+function GetObject(writex)
+	writedata = ""
+	
+	for i,s in pairs(shapes) do
+	
+		x1, y1, x2, y2, x3, y3, x4, y4 = s:getBoundingBox() --get the x,y coordinates of all 4 corners of the box.
+		if x3 < x2 then
+			tempx = x2
+			x2 = x3
+			x3 = tempx
+		end
+		if y2 < y1 then
+			tempx = y1
+			y1 = y2
+			y2 = tempx
+		end
+		boxwidth = x3 - x2 --calculate the width of the box
+		boxheight = y2 - y1 --calculate the height of the box
+	
+		writedata =  (writedata .. ' ' .. s:getData() .. ' ' .. bodies[i]:getX() .. ' ' .. bodies[i]:getY() .. ' ' .. bodies[i]:getMass() .. ' ' .. bodies[i]:getInertia() .. ' ' .. boxwidth.. ' ' .. boxheight .. ' ' .. 0 .. ' ' .. .25)
+	end
+	return(writedata)
+end
