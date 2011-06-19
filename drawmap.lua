@@ -52,8 +52,8 @@ function love.mousereleased (x, y, button)
 			GenerateAnObject(newobj)
 		elseif drawType == 3 then
 			newobj.type = 'G'
-			newobj.x = tempDrawingSx
-			newobj.y = tempDrawingSy
+			newobj.x = tempDrawingSx + tempDrawingSw / 2 
+			newobj.y = tempDrawingSy + tempDrawingSh / 2
 			newobj.mass = 0
 			newobj.inertia = 0
 			newobj.width = tempDrawingSw
@@ -63,12 +63,12 @@ function love.mousereleased (x, y, button)
 			GenerateAnObject(newobj)
 		elseif drawType == 4 then
 			newobj.type = 'I'
-			newobj.x = tempDrawingSx
-			newobj.y = tempDrawingSy
+			newobj.x = tempDrawingSx + tempDrawingSw / 2 
+			newobj.y = tempDrawingSy + tempDrawingSh / 2
 			newobj.mass = 0
 			newobj.inertia = 0
-			newobj.width = tempDrawingSw
-			newobj.height = tempDrawingSh
+			newobj.width = tempDrawingSw 
+			newobj.height = tempDrawingSh 
 			newobj.angle = 0
 			newobj.friction = 0
 			GenerateAnObject(newobj)
