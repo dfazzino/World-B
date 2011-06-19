@@ -37,7 +37,20 @@ function love.mousereleased (x, y, button)
 	-- print (tempDrawingSx, tempDrawingSy)
 	if button == "l" then
 		newobj = {}
-		if drawType == 2 then
+		if drawType == 1 then
+			newobj.type = 'P'
+			mousepos = camera1:mousepos()
+			playerx, playery = mousepos:unpack()
+			newobj.x = playerx
+			newobj.y = playery
+			newobj.mass = 15
+			newobj.inertia = 0
+			newobj.width = 50
+			newobj.height = 50
+			newobj.angle = 0			
+			newobj.friction = .25
+			CreatePlayer(GenerateAnObject(newobj))
+		elseif drawType == 2 then
 			newobj.type = 'E'
 			mousepos = camera1:mousepos()
 			enemyx, enemyy = mousepos:unpack()
@@ -49,7 +62,7 @@ function love.mousereleased (x, y, button)
 			newobj.height = 50
 			newobj.angle = 0			
 			newobj.friction = .25
-			GenerateAnObject(newobj)
+			CreateAnEnemy(GenerateAnObject(newobj))
 		elseif drawType == 3 then
 			newobj.type = 'G'
 			newobj.x = tempDrawingSx + tempDrawingSw / 2 

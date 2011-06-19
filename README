@@ -1,18 +1,12 @@
 World B says:  All your Material A are belong to us.
 
-Update: 6:02 upon further testing I've discovered the following problems:
-
 FIXED - 1) If you save a map, then reload it, and then try to save it again, and then try to reload it again, it will cause some sort of crash.
 FIXED - 2) drawing ice and grown from bottom left to top right will crash the program.  Same with top right to bottom left.  Just avoid those corners and you're solid.
-
-I screwed up the commit notes again, so here I am, making a fool out of myself in README again.
-
-6/18/11 5pm Commit notes, actually this is just a manual for the map editor:
 
 to pause the action, hit the '`' button on your keyboard three times.
 to change what you are drawing, hit the right mouse button
 drawing occurs in this order:
-1) player, which doesn't work so you'll have to add a player to the map manually
+1) player FIXED - which doesn't work so you'll have to add a player to the map manually
 2) enemies
 3) ground
 4) ice
