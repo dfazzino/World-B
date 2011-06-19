@@ -81,11 +81,11 @@ function GetObject(writex)
 		boxwidth = x3 - x2 --calculate the width of the box
 		boxheight = y2 - y1 --calculate the height of the box
 	
-		writedata =  (writedata .. ' ' .. s:getData() .. ' ' .. bodies[i]:getX() .. ' ' .. bodies[i]:getY() .. ' ' .. bodies[i]:getMass() .. ' ' .. bodies[i]:getInertia() .. ' ' .. boxwidth.. ' ' .. boxheight .. ' ' .. 0 .. ' ' .. .25)
+		writedata =  (writedata .. s:getData() .. ' ' .. bodies[i]:getX() .. ' ' .. bodies[i]:getY() .. ' ' .. bodies[i]:getMass() .. ' ' .. bodies[i]:getInertia() .. ' ' .. boxwidth.. ' ' .. boxheight .. ' ' .. 0 .. ' ' .. .25 .. ' ')
 	end
 	
 	if writedata ~= "" then
-		writedata = writedata .. ' X'
+		writedata = writedata .. 'X'
 	end
 	
 	return(writedata)
