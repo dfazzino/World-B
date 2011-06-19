@@ -92,7 +92,7 @@ end
 
 function ContinueDrawing(mouseCoords)
 
-	if mouseCoords and tempDrawingSx then
+	if mouseCoords and tempDrawingSx and tempDrawingSy then
 		tempMouseX, tempMouseY = mouseCoords:unpack()
 		
 		tempDrawingSw = tempMouseX - tempDrawingSx
