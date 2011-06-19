@@ -83,5 +83,10 @@ function GetObject(writex)
 	
 		writedata =  (writedata .. ' ' .. s:getData() .. ' ' .. bodies[i]:getX() .. ' ' .. bodies[i]:getY() .. ' ' .. bodies[i]:getMass() .. ' ' .. bodies[i]:getInertia() .. ' ' .. boxwidth.. ' ' .. boxheight .. ' ' .. 0 .. ' ' .. .25)
 	end
+	
+	if writedata ~= "" then
+		writedata = writedata .. ' X'
+	end
+	
 	return(writedata)
 end

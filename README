@@ -2,8 +2,8 @@ World B says:  All your Material A are belong to us.
 
 Update: 6:02 upon further testing I've discovered the following problems:
 
-1) If you save a map, then reload it, and then try to save it again, and then try to reload it again, it will cause some sort of crash.
-2) drawing ice and grown from bottom left to top right will crash the program.  Same with top right to bottom left.  Just avoid those corners and you're solid.
+FIXED - 1) If you save a map, then reload it, and then try to save it again, and then try to reload it again, it will cause some sort of crash.
+FIXED - 2) drawing ice and grown from bottom left to top right will crash the program.  Same with top right to bottom left.  Just avoid those corners and you're solid.
 
 I screwed up the commit notes again, so here I am, making a fool out of myself in README again.
 
@@ -19,9 +19,12 @@ drawing occurs in this order:
 
 to save, hit S button on your keyboard.
 
-there is no way to delete anything once it is placed, and there is no way to stop drawing a ground/ice once it is in action.  you're stuck with it.  drawing too small will cause the whole thing to fail.  also, i don't know why it doesn't draw ground and ice where you actually drew it... ver .00004 will address this proble.
+there is no way to delete anything once it is placed, and there is no way to stop drawing a ground/ice once it is in action.  you're stuck with it.  drawing too small will cause the whole thing to fail.
+
+FIXED - also, i don't know why it doesn't draw ground and ice where you actually drew it... ver .00004 will address this proble.
 
 when you save a map, it will appear in C:\Documents and Settings\[user]\Application Data\LOVE\World-B\TEXT.TXT
+in Vista (lol) C:\Users\[user]\AppData\Roaming\LOVE\World-B\TEXT.TXT
 
 If you want to start over, just delete this file.  Don't delete the TEXT.TXT in the program files\love\world-b directory though, unless you want to change the filename in map.lua.
 
