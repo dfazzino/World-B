@@ -147,5 +147,20 @@ function love.draw()
 	temporarilyDrawSomeThings()
 	
 	camera1:postdraw()
+	
+	-- temp code for draw type display
+	--1 = player, 2 = enemy, 3 = ground, 4 = ice
+	drawTypeName = ""
+	if drawType == 1 then
+		drawTypeName = "Player"
+	elseif drawType == 2 then
+		drawTypeName = "Enemy"
+	elseif drawType == 3 then
+		drawTypeName = "Ground"
+	elseif drawType == 4 then
+		drawTypeName = "Ice"
+	end
+	
 	love.graphics.print("FPS: "..love.timer.getFPS(), 10, 20)
+	love.graphics.print("DRAWING: "..drawTypeName, 10, 30)
 end

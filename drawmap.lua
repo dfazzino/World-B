@@ -37,7 +37,7 @@ function love.mousereleased (x, y, button)
 	-- print (tempDrawingSx, tempDrawingSy)
 	if button == "l" then
 		newobj = {}
-		if drawType == 1 then
+		if drawType == 1 and player == nil then -- only make 1 player, if player is set we have it already
 			newobj.type = 'P'
 			mousepos = camera1:mousepos()
 			playerx, playery = mousepos:unpack()
