@@ -15,8 +15,8 @@ function AddFlies()
 		for i = 0,s.density do
 			gameobject.type = 'F'
 			print (s.w)
-			gameobject.x = math.random(s.x, s.w)
-			gameobject.y = 100
+			gameobject.x = math.random(s.x-10, s.x+10)
+			gameobject.y = math.random(s.y-10, s.x+10)
 			gameobject.mass = 2
 			gameobject.inertia = 0
 			gameobject.width = 20
