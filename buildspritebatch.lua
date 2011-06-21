@@ -4,6 +4,7 @@ function temporarilyDrawSomeThings(isLeftMouseDown)
 	
 	drawPlayer()
 	drawEnemies()
+	drawFlies()
 	drawGround()
 	TempDraw()
 end
@@ -28,6 +29,20 @@ function drawEnemies()
 
 		if s:getData() == "E" then -- shouldn't enemies be pretty too?
 			love.graphics.setColor(200, 200, 0) -- yellow
+			love.graphics.rectangle("fill", bodies[i]:getX() - boxwidth/2, bodies[i]:getY() - boxheight/2, boxwidth, boxheight)
+		end
+	end
+end
+
+
+function drawFlies()
+	for i,s in pairs(shapes) do
+		x1, y1, x2, y2, x3, y3, x4, y4 = s:getBoundingBox() --get the x,y coordinates of all 4 corners of the box.
+		boxwidth = x3 - x2 --calculate the width of the box
+		boxheight = y2 - y1 --calculate the height of the box
+
+		if s:getData() == "F" then
+			love.graphics.setColor(12, 99, 40) -- pine green flies (unscented)
 			love.graphics.rectangle("fill", bodies[i]:getX() - boxwidth/2, bodies[i]:getY() - boxheight/2, boxwidth, boxheight)
 		end
 	end

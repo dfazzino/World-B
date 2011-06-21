@@ -2,6 +2,7 @@ require "TEsound"
 require "camera"
 require "vector"
 require "enemies"
+require "swarms"
 require "drawmap"
 require "map"
 require "physicsg" -- this might be temporary, just to draw objects from bodies/shapes
@@ -24,6 +25,7 @@ local tilesetSprite
 local worldupdate = true
 
 function love.load()
+	math.randomseed(love.timer.getMicroTime( ))
 	--TEsound.playLooping("DAVland theme.mp3", "music")
 	setupMap()
 	setupMapView()
@@ -31,6 +33,7 @@ function love.load()
 	love.graphics.setFont(12)
 	CreateWorld()
 	e = generatemap()
+	AddFlies()
 
     camerapos = vector(0,0)
     camera1 = camera(camerapos, .75, 0)
