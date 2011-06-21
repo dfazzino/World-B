@@ -26,7 +26,7 @@ local worldupdate = true
 
 function love.load()
 	math.randomseed(love.timer.getMicroTime( ))
-	TEsound.playLooping("DAVland theme.mp3", "music")
+	--TEsound.playLooping("DAVland theme.mp3", "music")
 	setupMap()
 	setupMapView()
 	setupTileset()
@@ -111,6 +111,14 @@ end
 
 
 function love.update(dt)
+
+	if player then
+		camx, camy = camera1:toCameraCoords(vector(bodies[player]:getX(),bodies[player]:getY())):unpack()
+		worldx, worldy = camera1:toWorldCoords(vector(bodies[player]:getX(),bodies[player]:getY())):unpack()
+	end
+	
+	--camera1:translate(vector(camx, camy) * dt)
+
 	
 	if worldupdate == true then
 		world:update(dt)

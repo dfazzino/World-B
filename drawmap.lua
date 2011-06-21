@@ -34,7 +34,7 @@ function CheckMouse ()
 end
 
 function love.mousereleased (x, y, button)
-	-- print (tempDrawingSx, tempDrawingSy)
+	--print (tempDrawingSx, tempDrawingSy, tempDrawingSw, tempDrawingSh)
 	if button == "l" then
 		newobj = {}
 		if drawType == 1 and player == nil then -- only make 1 player, if player is set we have it already
@@ -63,7 +63,7 @@ function love.mousereleased (x, y, button)
 			newobj.angle = 0			
 			newobj.friction = .25
 			CreateAnEnemy(GenerateAnObject(newobj))
-		elseif drawType == 3 and tempDrawingSw > 0 and tempDrawingSh > 0 then -- don't add 0 width/height objects
+		elseif drawType == 3 and math.abs(tempDrawingSw) > 0 and math.abs(tempDrawingSh) > 0 then -- don't add 0 width/height objects
 			newobj.type = 'G'
 			newobj.x = tempDrawingSx + tempDrawingSw / 2 
 			newobj.y = tempDrawingSy + tempDrawingSh / 2
@@ -74,7 +74,7 @@ function love.mousereleased (x, y, button)
 			newobj.friction = .25
 			newobj.angle = 0
 			GenerateAnObject(newobj)
-		elseif drawType == 4 and tempDrawingSw > 0 and tempDrawingSh > 0 then -- don't add 0 width/height objects
+		elseif drawType == 4 and math.abs(tempDrawingSw) > 0 and math.abs(tempDrawingSh) > 0 then -- don't add 0 width/height objects
 			newobj.type = 'I'
 			newobj.x = tempDrawingSx + tempDrawingSw / 2 
 			newobj.y = tempDrawingSy + tempDrawingSh / 2
@@ -100,14 +100,13 @@ function startDraw (startDrawVector, drawType)
 	
 end	
 
-
 function ContinueDrawing(mouseCoords)
 
 	if mouseCoords and tempDrawingSx and tempDrawingSy then
 		tempMouseX, tempMouseY = mouseCoords:unpack()
 		
 		tempDrawingSw = tempMouseX - tempDrawingSx
-		tempDrawingSh = tempMouseY- tempDrawingSy
+		tempDrawingSh = tempMouseY - tempDrawingSy
 	end
 	
 end
