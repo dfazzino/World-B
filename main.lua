@@ -129,6 +129,7 @@ function love.update(dt)
 		
 	PlayerKeyDown(dt)
     MoveEnemies(dt)
+    MoveFlies(dt)
 	ContinueDrawing(CheckMouse())
 end
 

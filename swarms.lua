@@ -29,3 +29,11 @@ function AddFlies()
 		end
 	end
 end
+
+function MoveFlies (dt)
+
+	for i,fly in pairs(flies) do
+		ApplyImpulse(fly, math.random(-1000,1000)*dt, 0)
+	end
+
+end
