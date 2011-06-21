@@ -26,7 +26,7 @@ local worldupdate = true
 
 function love.load()
 	math.randomseed(love.timer.getMicroTime( ))
-	--TEsound.playLooping("DAVland theme.mp3", "music")
+	TEsound.playLooping("DAVland theme.mp3", "music")
 	setupMap()
 	setupMapView()
 	setupTileset()
