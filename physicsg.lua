@@ -6,7 +6,7 @@ world = nil
 objectIndex = 0
 
 function CreateWorld()
-	world = love.physics.newWorld(-650, -650, 650, 650)  -- how big is the world, anyway?
+	world = love.physics.newWorld(-2000, -2000, 2000, 2000)  -- how big is the world, anyway?
 	world:setGravity(0, 700)
 	world:setMeter(64)
 end

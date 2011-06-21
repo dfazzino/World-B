@@ -17,7 +17,7 @@ function AddFlies()
 			print (s.w)
 			gameobject.x = math.random(s.x, s.w)
 			gameobject.y = 100
-			gameobject.mass = 10
+			gameobject.mass = 2
 			gameobject.inertia = 0
 			gameobject.width = 20
 			gameobject.height = 20
@@ -32,9 +32,20 @@ end
 
 function MoveFlies (dt)
 
+	first = true
+
 	for i,fly in pairs(flies) do
-		ApplyImpulse(fly, math.random(-1000,1000)*dt, 0)
-		ApplyImpulse(fly, math.random(-1000,1000)*dt, math.random(-1000,1000)*dt)
+		if first then
+			lastFlyX = 0
+			lastFlyY = 0
+			first = false
+		end
+		dx = bodies[player]:getX() - bodies[fly]:getX() - lastFlyX + 5 
+		dy = bodies[player]:getY() - bodies[fly]:getY() - lastFlyY + 5
+		ApplyImpulse(fly, (math.random(0,5)+dx)*dt/5, (math.random(0,7)+dy)*dt/5)
+		
+		lastFlyX = bodies[fly]:getX()
+		lastFlyY = bodies[fly]:getY()
 	end
 
 end
