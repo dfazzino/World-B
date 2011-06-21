@@ -22,7 +22,7 @@ function AddFlies()
 			gameobject.width = 20
 			gameobject.height = 20
 			gameobject.angle = 0
-			gameobject.friction = 4
+			gameobject.friction = .5
 
 			newFly = GenerateAnObject(gameobject)
 			table.insert(flies, newFly)
