@@ -63,7 +63,7 @@ function love.mousereleased (x, y, button)
 			newobj.angle = 0			
 			newobj.friction = .25
 			CreateAnEnemy(GenerateAnObject(newobj))
-		elseif drawType == 3 then
+		elseif drawType == 3 and tempDrawingSw > 0 and tempDrawingSh > 0 then -- don't add 0 width/height objects
 			newobj.type = 'G'
 			newobj.x = tempDrawingSx + tempDrawingSw / 2 
 			newobj.y = tempDrawingSy + tempDrawingSh / 2
@@ -74,7 +74,7 @@ function love.mousereleased (x, y, button)
 			newobj.friction = .25
 			newobj.angle = 0
 			GenerateAnObject(newobj)
-		elseif drawType == 4 then
+		elseif drawType == 4 and tempDrawingSw > 0 and tempDrawingSh > 0 then -- don't add 0 width/height objects
 			newobj.type = 'I'
 			newobj.x = tempDrawingSx + tempDrawingSw / 2 
 			newobj.y = tempDrawingSy + tempDrawingSh / 2
@@ -95,8 +95,6 @@ end
 function startDraw (startDrawVector, drawType)
 
 	tempDrawingSx,tempDrawingSy = startDrawVector:unpack()
-	tempDrawingSw = tempDrawingSx - tempDrawingSx + 10
-	tempDrawingSh = tempDrawingSy - tempDrawingSy + 10
 	tempDrawing = drawType
 	drawing = true
 	
