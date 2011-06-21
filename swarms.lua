@@ -6,8 +6,7 @@ function CreateSwarmZone(gameobject)
 
    	table.insert(swarmzones, swarmx, gameobject)
 	swarmx = swarmx + 1
-	print ("added to swarm")
-	debug.debug()
+
 end
 
 
