@@ -117,7 +117,7 @@ function love.update(dt)
 		camx = camx - love.graphics.getWidth()/2
 		camy = camy - love.graphics.getHeight()/2
 		
-		camera1:translate(vector(camx, camy) * dt)
+		camera1:translate(vector(camx, camy) * dt * 10)
 	end
 	
 	if worldupdate == true then
@@ -171,6 +171,8 @@ function love.draw()
 		drawTypeName = "Ground"
 	elseif drawType == 4 then
 		drawTypeName = "Ice"
+	elseif drawType == 5 then
+		drawTypeName = "Swarm Zone"
 	end
 	
 	love.graphics.print("FPS: "..love.timer.getFPS(), 10, 20)

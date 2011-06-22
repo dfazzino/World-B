@@ -1,12 +1,12 @@
 
-drawType = 1  --1 = player, 2 = enemy, 3 = ground, 4 = ice
+drawType = 1  --1 = player, 2 = enemy, 3 = ground, 4 = ice, 5 = swarm zone
 
 function love.mousepressed (x, y, button )
 	
 	mousePos = camera1:mousepos()
 
 		if button == "r" then
-			if drawType == 4 then
+			if drawType == 5 then
 				drawType = 1
 			else
 				drawType = drawType + 1
@@ -15,7 +15,7 @@ function love.mousepressed (x, y, button )
 	-- end
 
 	if button == "l" then
-		if drawType == 3 or drawType == 4 then
+		if drawType == 3 or drawType == 4 or drawType == 5 then
 			startDraw(mousePos, drawType)
 		end
 		
@@ -85,7 +85,15 @@ function love.mousereleased (x, y, button)
 			newobj.angle = 0
 			newobj.friction = 0
 			GenerateAnObject(newobj)
-		end
+		elseif drawType == 5 and math.abs(tempDrawingSw) > 0 and math.abs(tempDrawingSh) > 0 then -- don't add 0 width/height objects
+			newobj.type = 'SZ'
+			newobj.x = tempDrawingSx + tempDrawingSw / 2 
+			newobj.y = tempDrawingSy + tempDrawingSh / 2
+			newobj.w = tempDrawingSw 
+			newobj.h = tempDrawingSh 
+			newobj.density = math.abs( tempDrawingSw * tempDrawingSh / 250 )
+			AddFiles(CreateSwarmZone(newobj))
+		end		
 	end
 	drawing = false
 	
