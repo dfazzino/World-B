@@ -91,7 +91,7 @@ function love.mousereleased (x, y, button)
 			newobj.y = tempDrawingSy + tempDrawingSh / 2
 			newobj.w = tempDrawingSw 
 			newobj.h = tempDrawingSh 
-			newobj.density = math.abs( tempDrawingSw * tempDrawingSh / 250 )
+			newobj.density = math.abs( tempDrawingSw * tempDrawingSh / 250 ) + 1
 			AddFiles(CreateSwarmZone(newobj))
 		end		
 	end

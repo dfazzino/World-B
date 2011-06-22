@@ -19,7 +19,7 @@ function AddFlies()
 			mygameobject = {}
 			mygameobject.type = 'F'
 			mygameobject.x = math.random(s.x-10, s.x+10)
-			mygameobject.y = math.random(s.y-10, s.x+10)
+			mygameobject.y = math.random(s.y-10, s.y+10)
 			mygameobject.mass = 2
 			mygameobject.inertia = 0
 			mygameobject.width = 20
@@ -38,7 +38,7 @@ function AddFiles(swarmZoneIndex)
 		mygameobject = {}
 		mygameobject.type = 'F'
 		mygameobject.x = math.random(swarmzones[swarmZoneIndex].x-10, swarmzones[swarmZoneIndex].x+10)
-		mygameobject.y = math.random(swarmzones[swarmZoneIndex].y-10, swarmzones[swarmZoneIndex].x+10)
+		mygameobject.y = math.random(swarmzones[swarmZoneIndex].y-10, swarmzones[swarmZoneIndex].y+10)
 		mygameobject.mass = 2
 		mygameobject.inertia = 0
 		mygameobject.width = 20
