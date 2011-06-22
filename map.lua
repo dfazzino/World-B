@@ -13,15 +13,19 @@ function generatemap()
 				if gameobject.x ~= nil then
 					if gameobject.type ~= 'SZ' then
 						myObjIndex = GenerateAnObject(gameobject)
-					end
-                    if gameobject.type == 'E' then
-                        CreateAnEnemy(myObjIndex)
-                    end
-                    if gameobject.type == 'P' then
-                        CreatePlayer(myObjIndex)
-                    end
-                    if gameobject.type == 'SZ' then
+						
+						if gameobject.type == 'E' then
+							CreateAnEnemy(myObjIndex)
+						end
+						if gameobject.type == 'P' then
+							CreatePlayer(myObjIndex)
+						end
+						
+						gameobject = {}
+					else
+					
                         CreateSwarmZone(gameobject)
+						gameobject = {}
                     end
 				end
 				gameobject.type = token
@@ -47,7 +51,6 @@ function generatemap()
 				end
 				parsex = parsex + 1
 			end
-
 		end
 	return e
 end

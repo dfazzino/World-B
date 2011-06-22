@@ -4,27 +4,28 @@ swarmx = 0
 
 function CreateSwarmZone(gameobject)
 
-   	table.insert(swarmzones, swarmx, gameobject)
+   	swarmzones[swarmx] = gameobject
 	swarmx = swarmx + 1
 
 end
 
 
 function AddFlies()
-	for i,s in pairs(swarmzones) do
-		for i = 0,s.density do
-			gameobject.type = 'F'
-			print (s.w)
-			gameobject.x = math.random(s.x-10, s.x+10)
-			gameobject.y = math.random(s.y-10, s.x+10)
-			gameobject.mass = 2
-			gameobject.inertia = 0
-			gameobject.width = 20
-			gameobject.height = 20
-			gameobject.angle = 0
-			gameobject.friction = .5
+	
+	for i,s in pairs(swarmzones) do		
+		for j = 0,s.density do
+			mygameobject = {}
+			mygameobject.type = 'F'
+			mygameobject.x = math.random(s.x-10, s.x+10)
+			mygameobject.y = math.random(s.y-10, s.x+10)
+			mygameobject.mass = 2
+			mygameobject.inertia = 0
+			mygameobject.width = 20
+			mygameobject.height = 20
+			mygameobject.angle = 0
+			mygameobject.friction = .5
 
-			newFly = GenerateAnObject(gameobject)
+			newFly = GenerateAnObject(mygameobject)
 			table.insert(flies, newFly)
 		end
 	end
