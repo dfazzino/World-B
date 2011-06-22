@@ -114,11 +114,11 @@ function love.update(dt)
 
 	if player then
 		camx, camy = camera1:toCameraCoords(vector(bodies[player]:getX(),bodies[player]:getY())):unpack()
-		worldx, worldy = camera1:toWorldCoords(vector(bodies[player]:getX(),bodies[player]:getY())):unpack()
+		camx = camx - love.graphics.getWidth()/2
+		camy = camy - love.graphics.getHeight()/2
+		
+		camera1:translate(vector(camx, camy) * dt)
 	end
-	
-	--camera1:translate(vector(camx, camy) * dt)
-
 	
 	if worldupdate == true then
 		world:update(dt)
