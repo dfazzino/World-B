@@ -22,7 +22,7 @@ local tileSize -- size of tiles in pixels
 local tileQuads = {} -- parts of the tileset used for different tiles
 local tilesetSprite
 
-local worldupdate = true
+local worldupdate = false
 
 function love.load()
 	math.randomseed(love.timer.getMicroTime( ))
@@ -171,6 +171,8 @@ function love.draw()
 		drawTypeName = "Ground"
 	elseif drawType == 4 then
 		drawTypeName = "Ice"
+	elseif drawType == 5 then
+		drawTypeName = "Swarm Zone"
 	end
 	
 	love.graphics.print("FPS: "..love.timer.getFPS(), 10, 20)

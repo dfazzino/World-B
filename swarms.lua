@@ -5,18 +5,21 @@ swarmx = 0
 function CreateSwarmZone(gameobject)
 
    	table.insert(swarmzones, swarmx, gameobject)
+	print ("SZ x, y, = " .. gameobject.x, gameobject.y)
+	debug.debug()
 	swarmx = swarmx + 1
-
 end
 
 
 function AddFlies()
 	for i,s in pairs(swarmzones) do
-		for i = 0,s.density do
+		x = 0
+
+		for j = 1, s.density do
 			gameobject.type = 'F'
-			print (s.w)
+			print (s.x , s.y)
 			gameobject.x = math.random(s.x-10, s.x+10)
-			gameobject.y = math.random(s.y-10, s.x+10)
+			gameobject.y = math.random(s.y-10, s.y+10)
 			gameobject.mass = 2
 			gameobject.inertia = 0
 			gameobject.width = 20
@@ -47,5 +50,16 @@ function MoveFlies (dt)
 		lastFlyX = bodies[fly]:getX()
 		lastFlyY = bodies[fly]:getY()
 	end
+
+end
+
+
+function GetSZ()
+	writezones = ''
+	for i,zone in pairs(swarmzones) do
+		writezones = (writezones .. 'SZ' .. ' ' .. zone.x .. ' ' .. zone.y .. ' ' .. zone.w .. ' ' .. zone.h .. ' ' .. zone.density .. ' ')
+	end
+
+	return writezones
 
 end

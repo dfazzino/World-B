@@ -77,6 +77,10 @@ function TempDraw ()
 			love.graphics.setColor(175, 175, 255) -- icey blue
 			love.graphics.rectangle("fill", tempDrawingSx, tempDrawingSy, tempDrawingSw, tempDrawingSh)
 		end
+	    if tempDrawing == 5 then
+			love.graphics.setColor(175, 175, 255) -- icey blue
+			love.graphics.rectangle("line", tempDrawingSx, tempDrawingSy, tempDrawingSw, tempDrawingSh)
+		end
 		
 	-- end
 

@@ -65,7 +65,14 @@ function writemap ()
 	-- repeat
 		
 		writeObject = GetObject(writex)
-		print(writeObject)
+		swarmZoneData = GetSZ()
+		
+		writeObject = (writeObject .. swarmZoneData)
+
+		if writeObject ~= "" then
+			writeObject = writeObject .. 'X'
+		end
+		
 		if writeObject ~= false then
 			-- debug.debug()
 			file:write(writeObject)
