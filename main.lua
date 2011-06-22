@@ -106,7 +106,7 @@ end
 function RunGame(runbool)
 
 	worldupdate = runbool
-	debug.debug()
+
 end
 
 
