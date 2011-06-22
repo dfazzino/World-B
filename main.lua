@@ -117,7 +117,7 @@ function love.update(dt)
 		camx = camx - love.graphics.getWidth()/2
 		camy = camy - love.graphics.getHeight()/2
 		
-		camera1:translate(vector(camx, camy) * dt)
+		camera1:translate(vector(camx, camy) * dt * 10)
 	end
 	
 	if worldupdate == true then

@@ -40,7 +40,6 @@ function GenerateAnObject(gameobject)
 			.. ")"
 			)
 
-	-- function should add new items to table intellegently (index)
 	body = love.physics.newBody(world, x, y, mass, inertia)
 	shape = love.physics.newRectangleShape(body, 0, 0, width, height, angle) -- x,y = 0 because body anchors to center of shape
 	shape:setData(objtype)

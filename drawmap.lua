@@ -87,15 +87,13 @@ function love.mousereleased (x, y, button)
 			GenerateAnObject(newobj)
 		elseif drawType == 5 and math.abs(tempDrawingSw) > 0 and math.abs(tempDrawingSh) > 0 then -- don't add 0 width/height objects
 			newobj.type = 'SZ'
-			newobj.x = tempDrawingSx  
-			newobj.y = tempDrawingSy 
+			newobj.x = tempDrawingSx + tempDrawingSw / 2 
+			newobj.y = tempDrawingSy + tempDrawingSh / 2
 			newobj.w = tempDrawingSw 
 			newobj.h = tempDrawingSh 
-			newobj.density = 1	
-			CreateSwarmZone(newobj)
-			AddFlies()
-			
-		end
+			newobj.density = math.abs( tempDrawingSw * tempDrawingSh / 250 ) + 1
+			AddFiles(CreateSwarmZone(newobj))
+
 	end
 	drawing = false
 	

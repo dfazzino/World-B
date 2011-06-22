@@ -4,32 +4,52 @@ swarmx = 0
 
 function CreateSwarmZone(gameobject)
 
-   	table.insert(swarmzones, swarmx, gameobject)
-	print ("SZ x, y, = " .. gameobject.x, gameobject.y)
-	debug.debug()
+	thisSwarmX = swarmx
+
+   	swarmzones[thisSwarmX] = gameobject
 	swarmx = swarmx + 1
+	return thisSwarmX
+
 end
 
 
 function AddFlies()
-	for i,s in pairs(swarmzones) do
-		x = 0
+	
+	for i,s in pairs(swarmzones) do		
+		for j = 0,s.density do
+			mygameobject = {}
+			mygameobject.type = 'F'
+			mygameobject.x = math.random(s.x-10, s.x+10)
+			mygameobject.y = math.random(s.y-10, s.y+10)
+			mygameobject.mass = 2
+			mygameobject.inertia = 0
+			mygameobject.width = 20
+			mygameobject.height = 20
+			mygameobject.angle = 0
+			mygameobject.friction = .5
 
-		for j = 1, s.density do
-			gameobject.type = 'F'
-			print (s.x , s.y)
-			gameobject.x = math.random(s.x-10, s.x+10)
-			gameobject.y = math.random(s.y-10, s.y+10)
-			gameobject.mass = 2
-			gameobject.inertia = 0
-			gameobject.width = 20
-			gameobject.height = 20
-			gameobject.angle = 0
-			gameobject.friction = .5
+			newFly = GenerateAnObject(mygameobject)
 
-			newFly = GenerateAnObject(gameobject)
 			table.insert(flies, newFly)
 		end
+	end
+end
+
+function AddFiles(swarmZoneIndex)
+	for j = 0,swarmzones[swarmZoneIndex].density do
+		mygameobject = {}
+		mygameobject.type = 'F'
+		mygameobject.x = math.random(swarmzones[swarmZoneIndex].x-10, swarmzones[swarmZoneIndex].x+10)
+		mygameobject.y = math.random(swarmzones[swarmZoneIndex].y-10, swarmzones[swarmZoneIndex].y+10)
+		mygameobject.mass = 2
+		mygameobject.inertia = 0
+		mygameobject.width = 20
+		mygameobject.height = 20
+		mygameobject.angle = 0
+		mygameobject.friction = .5
+
+		newFly = GenerateAnObject(mygameobject)
+		table.insert(flies, newFly)
 	end
 end
 

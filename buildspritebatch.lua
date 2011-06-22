@@ -42,7 +42,7 @@ function drawFlies()
 		boxheight = y2 - y1 --calculate the height of the box
 
 		if s:getData() == "F" then
-			love.graphics.setColor(12, 99, 40) -- pine green flies (unscented)
+			love.graphics.setColor(12, math.random(50,255), 40) -- pine green BUZZING flies (unscented)
 			love.graphics.rectangle("fill", bodies[i]:getX() - boxwidth/2, bodies[i]:getY() - boxheight/2, boxwidth, boxheight)
 		end
 	end
@@ -77,9 +77,9 @@ function TempDraw ()
 			love.graphics.setColor(175, 175, 255) -- icey blue
 			love.graphics.rectangle("fill", tempDrawingSx, tempDrawingSy, tempDrawingSw, tempDrawingSh)
 		end
-	    if tempDrawing == 5 then
-			love.graphics.setColor(175, 175, 255) -- icey blue
-			love.graphics.rectangle("line", tempDrawingSx, tempDrawingSy, tempDrawingSw, tempDrawingSh)
+		if tempDrawing == 5 then
+			love.graphics.setColor(255, 0, 255) -- dem ugly swarm zones
+			love.graphics.rectangle("fill", tempDrawingSx, tempDrawingSy, tempDrawingSw, tempDrawingSh)
 		end
 		
 	-- end
