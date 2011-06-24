@@ -35,6 +35,11 @@ function PlayerKeyReleased(key)
 			maprun = 0
 		end
 	end
+	
+	if key == ' ' then
+		PlaceArrow()
+	end
+
 		
 	
 end

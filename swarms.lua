@@ -1,6 +1,7 @@
 swarmzones = {}
 flies = {}
 swarmx = 0
+fliesx = 0
 
 function CreateSwarmZone(gameobject)
 
@@ -28,9 +29,11 @@ function AddFlies()
 			mygameobject.angle = 0
 			mygameobject.friction = .5
 
-			newFly = GenerateAnObject(mygameobject)
-
-			table.insert(flies, newFly)
+			newFly = {}
+			newFly.objIndex = GenerateAnObject(mygameobject)
+			newFly.target = 1
+			
+			table.insert(flies, fliesx, newFly)
 		end
 	end
 end
@@ -48,8 +51,8 @@ function AddFiles(swarmZoneIndex)
 		mygameobject.angle = 0
 		mygameobject.friction = .5
 
-		newFly = GenerateAnObject(mygameobject)
-		table.insert(flies, newFly)
+		newFly = {}
+		newFly.flyObjIndex = GenerateAnObject(mygameobject)
 	end
 end
 
@@ -58,17 +61,20 @@ function MoveFlies (dt)
 	first = true
 
 	for i,fly in pairs(flies) do
+		if fly.target == nil then
+			AttackArrow(fly)
+		end
 		if first then
 			lastFlyX = 0
 			lastFlyY = 0
 			first = false
 		end
-		dx = bodies[player]:getX() - bodies[fly]:getX() - lastFlyX + 5 
-		dy = bodies[player]:getY() - bodies[fly]:getY() - lastFlyY + 5
-		ApplyImpulse(fly, (math.random(0,5)+dx)*dt/5, (math.random(0,7)+dy)*dt/5)
+		dx = bodies[fly.target]:getX() - bodies[fly.objIndex]:getX() - lastFlyX + 5 
+		dy = bodies[fly.target]:getY() - bodies[fly.objIndex]:getY() - lastFlyY + 5
+		ApplyImpulse(fly.objIndex, (math.random(0,5)+dx)*dt/5, (math.random(0,7)+dy)*dt/5)
 		
-		lastFlyX = bodies[fly]:getX()
-		lastFlyY = bodies[fly]:getY()
+		lastFlyX = bodies[fly.objIndex]:getX()
+		lastFlyY = bodies[fly.objIndex]:getY()
 	end
 
 end
@@ -82,4 +88,33 @@ function GetSZ()
 
 	return writezones
 
+end
+
+
+function AttackArrow(thisFly)
+	settarget = nil
+	arrowset = GetArrows()
+
+		for j, arrow in pairs(arrowset) do
+			xDistance = bodies[arrow]:getX() - bodies[thisFly.objIndex]:getX()
+			yDistance = bodies[arrow]:getY() - bodies[thisFly.objIndex]:getY()
+			hypotenuse = math.sqrt((xDistance*xDistance) + (yDistance*yDistance))
+			if settarget == nil then
+				hldHypotenuse = hypotenuse
+				settarget = arrow
+				debug.debug()
+			else 
+				if hypotenuse < hldHypotenuse then
+					hldHypotenuse = hypotenuse
+					settarget = arrow
+					debug.debug()
+				end
+			end
+		end
+		if settarget == nil then
+			thisFly.target = 1
+		else
+			thisFly.target = settarget
+			debug.debug()
+		end
 end

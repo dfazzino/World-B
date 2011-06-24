@@ -3,6 +3,7 @@ require "camera"
 require "vector"
 require "enemies"
 require "swarms"
+require "arrows"
 require "drawmap"
 require "map"
 require "physicsg" -- this might be temporary, just to draw objects from bodies/shapes
@@ -22,7 +23,7 @@ local tileSize -- size of tiles in pixels
 local tileQuads = {} -- parts of the tileset used for different tiles
 local tilesetSprite
 
-local worldupdate = false
+local worldupdate = true
 
 function love.load()
 	math.randomseed(love.timer.getMicroTime( ))
