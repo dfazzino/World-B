@@ -27,11 +27,12 @@ function AddFlies()
 			mygameobject.width = 20
 			mygameobject.height = 20
 			mygameobject.angle = 0
-			mygameobject.friction = .5
+			mygameobject.friction = .001
 
 			newFly = {}
 			newFly.objIndex = GenerateAnObject(mygameobject)
-			newFly.target = 1
+			--newFly.target = 1
+			newFly.target = nil
 			
 			table.insert(flies, fliesx, newFly)
 		end
@@ -49,36 +50,58 @@ function AddFiles(swarmZoneIndex)
 		mygameobject.width = 20
 		mygameobject.height = 20
 		mygameobject.angle = 0
-		mygameobject.friction = .5
+		mygameobject.friction = .001
 
 		newFly = {}
-		newFly.flyObjIndex = GenerateAnObject(mygameobject)
+		newFly.objIndex = GenerateAnObject(mygameobject)
+		newFly.target = nil
+		
+		table.insert(flies, fliesx, newFly)
 	end
 end
 
 function MoveFlies (dt)
 
-	first = true
-
-	for i,fly in pairs(flies) do
-		if fly.target == nil then
-			AttackArrow(fly)
-		end
-		if first then
-			lastFlyX = 0
-			lastFlyY = 0
-			first = false
-		end
-		dx = bodies[fly.target]:getX() - bodies[fly.objIndex]:getX() - lastFlyX + 5 
-		dy = bodies[fly.target]:getY() - bodies[fly.objIndex]:getY() - lastFlyY + 5
-		ApplyImpulse(fly.objIndex, (math.random(0,5)+dx)*dt/5, (math.random(0,7)+dy)*dt/5)
+	if table.getn(arrows) > 0 then
+	
+		first = true
 		
-		lastFlyX = bodies[fly.objIndex]:getX()
-		lastFlyY = bodies[fly.objIndex]:getY()
+		for i,fly in pairs(flies) do
+			
+			if fly.target == nil then
+				print(i .. " has nil target")
+				AttackArrow(fly)
+				print(i .. " has target " .. fly.target)
+			end
+			if first then
+				lastFlyX = 0
+				lastFlyY = 0
+				first = false
+			end
+			dx = bodies[fly.target]:getX() - bodies[fly.objIndex]:getX() - math.random(-20,20)
+			dy = bodies[fly.target]:getY() - bodies[fly.objIndex]:getY() - math.random(0,20)
+--			dx = bodies[fly.target]:getX() - bodies[fly.objIndex]:getX()
+--			dy = bodies[fly.target]:getY() - bodies[fly.objIndex]:getY()
+--			ApplyImpulse(fly.objIndex, (math.random(0,5)+dx)*dt/3, (math.random(0,7)+dy)*dt/3)
+			ApplyImpulse(fly.objIndex, dx*dt/3, dy*dt)
+			
+			lastFlyX = bodies[fly.objIndex]:getX()
+			lastFlyY = bodies[fly.objIndex]:getY()
+		end
 	end
-
 end
 
+function omNomNom()
+	
+	for i,fly in pairs(flies) do
+		if table.getn(arrows) > 0 and fly.target ~= nil then
+			if math.abs(bodies[fly.target]:getX() - bodies[fly.objIndex]:getX()) < 20 and math.abs(bodies[fly.target]:getY() - bodies[fly.objIndex]:getY()) < 20 then
+				--print ("eating!")
+				love.graphics.print("om nom nom",bodies[fly.objIndex]:getX()+5, bodies[fly.objIndex]:getY()-15)
+			end
+		end
+	end
+end
 
 function GetSZ()
 	writezones = ''
@@ -102,12 +125,12 @@ function AttackArrow(thisFly)
 			if settarget == nil then
 				hldHypotenuse = hypotenuse
 				settarget = arrow
-				debug.debug()
+				--debug.debug()
 			else 
 				if hypotenuse < hldHypotenuse then
 					hldHypotenuse = hypotenuse
 					settarget = arrow
-					debug.debug()
+					--debug.debug()
 				end
 			end
 		end
@@ -115,6 +138,6 @@ function AttackArrow(thisFly)
 			thisFly.target = 1
 		else
 			thisFly.target = settarget
-			debug.debug()
+			--debug.debug()
 		end
 end

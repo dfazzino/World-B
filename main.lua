@@ -158,6 +158,7 @@ function love.draw()
 		0, zoomX, zoomY)
 		
 	temporarilyDrawSomeThings()
+	omNomNom()
 	
 	camera1:postdraw()
 	
@@ -177,5 +178,5 @@ function love.draw()
 	end
 	
 	love.graphics.print("FPS: "..love.timer.getFPS(), 10, 20)
-	love.graphics.print("DRAWING: "..drawTypeName, 10, 30)
+	love.graphics.print("DRAWING: "..drawTypeName, 10, 30)	
 end
