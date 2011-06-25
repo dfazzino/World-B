@@ -97,6 +97,7 @@ function omNomNom()
 		if table.getn(arrows) > 0 and fly.target ~= nil then
 			if math.abs(bodies[fly.target]:getX() - bodies[fly.objIndex]:getX()) < 20 and math.abs(bodies[fly.target]:getY() - bodies[fly.objIndex]:getY()) < 20 then
 				--print ("eating!")
+				love.graphics.setColor(255, 255, 0) -- yellow om noms
 				love.graphics.print("om nom nom",bodies[fly.objIndex]:getX()+5, bodies[fly.objIndex]:getY()-15)
 			end
 		end
