@@ -26,19 +26,19 @@ function GenerateAnObject(gameobject)
 	angle		= gameobject.angle
 	friction	= gameobject.friction
 
-	print(	"Created obj " 	
-			.. objtype 
-			.. " (x=" 		.. x 
-			.. ", y=" 		.. y 
-			.. ", m=" 	.. mass 
-			.. ", i=" .. inertia 
-			.. ", w=" 	.. width 
-			.. ", h=" 	.. height
-			.. ", a=" 	.. angle
-			.. ", f=" 	.. friction
-			.. ", idx=" 	.. thisIndex
-			.. ")"
-			)
+	-- print(	"Created obj " 	
+			-- .. objtype 
+			-- .. " (x=" 		.. x 
+			-- .. ", y=" 		.. y 
+			-- .. ", m=" 	.. mass 
+			-- .. ", i=" .. inertia 
+			-- .. ", w=" 	.. width 
+			-- .. ", h=" 	.. height
+			-- .. ", a=" 	.. angle
+			-- .. ", f=" 	.. friction
+			-- .. ", idx=" 	.. thisIndex
+			-- .. ")"
+			-- )
 
 	body = love.physics.newBody(world, x, y, mass, inertia)
 	shape = love.physics.newRectangleShape(body, 0, 0, width, height, angle) -- x,y = 0 because body anchors to center of shape

@@ -39,7 +39,14 @@ function PlayerKeyReleased(key)
 	if key == ' ' then
 		PlaceArrow()
 	end
-
+	
+	if key == 'z'	then
+        
+		camera1.zoom = camera1.zoom + .08
+	end	
+	if key == 'x' 	then
+		camera1.zoom = camera1.zoom - .08 
+	end	
 		
 	
 end

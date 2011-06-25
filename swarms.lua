@@ -69,9 +69,9 @@ function MoveFlies (dt)
 		for i,fly in pairs(flies) do
 			
 			if fly.target == nil then
-				print(i .. " has nil target")
+				-- print(i .. " has nil target")
 				AttackArrow(fly)
-				print(i .. " has target " .. fly.target)
+				-- print(i .. " has target " .. fly.target)
 			end
 			if first then
 				lastFlyX = 0
