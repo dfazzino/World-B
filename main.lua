@@ -158,7 +158,7 @@ function love.draw()
 		0, zoomX, zoomY)
 		
 	temporarilyDrawSomeThings()
-	omNomNom()
+
 	
 	camera1:postdraw()
 	

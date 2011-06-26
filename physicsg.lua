@@ -86,3 +86,16 @@ function GetObject(writex)
 	
 	return(writedata)
 end
+
+
+function RemoveShape (shapeNum)
+
+	table.remove(shapes, shapeNum)
+end
+
+
+function RemoveBody (bodyNum)
+	
+	table.remove(bodies, bodyNum)
+
+end
