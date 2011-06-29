@@ -80,7 +80,7 @@ function MoveFlies (dt)
 				-- print(i .. " has target " .. fly.target)
 			end
 			
-		if arrows[0] ~= nil then
+			if arrows[0] ~= nil then
 				if first then
 					lastFlyX = 0
 					lastFlyY = 0
@@ -127,6 +127,7 @@ function AttackArrow(thisFly)
 			end
 			if settarget == nil then
 				thisFly.target = 1
+				thisFly.arrowNum = arrowNum
 				
 			else
 				thisFly.target = settarget
@@ -149,10 +150,10 @@ function omNomNom(thisFly)
 			thisFly.omNomTimer = love.timer.getMicroTime( )
 			-- print (thisFly.omNomTimer - thisFly.omNomTime)
 			if thisFly.omNomTimer - thisFly.omNomTime > 3 then
-				print (thisFly.arrowNum)
 				RemoveArrow(thisFly.arrowNum)
 				RemoveShape(thisFly.target)
-				RemoveBody(thisFly.target)
+				-- RemoveBody(thisFly.target)
+				-- debug.debug()
 				-- thisFly.target = nil
 			end
 		end

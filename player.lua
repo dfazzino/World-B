@@ -37,7 +37,11 @@ function PlayerKeyReleased(key)
 	end
 	
 	if key == ' ' then
-		PlaceArrow()
+		ShootArrow()
+	end
+	
+	if key == '0' then
+		MoveArrowPlz()
 	end
 	
 	if key == 'z'	then

@@ -1,30 +1,48 @@
 arrows = {}
 arrowIndex = 0
-function PlaceArrow()
+function PlaceArrow(arrowObjIndex)
 
-	mousePos = camera1:mousepos()
-	local mousex, mousey = mousePos:unpack()
-	
-	arrowobj = {}
-	for i = 0, 1 do
-		arrowobj.type = 'A'
-		arrowobj.x = math.random(mousex - 5, mousex + 5)
-		arrowobj.y = math.random(mousey - 5, mousey + 5)
-		arrowobj.mass = 0
-		arrowobj.inertia = 0
-		arrowobj.width = 4
-		arrowobj.height = 4
-		arrowobj.angle = 0
-		arrowobj.friction = 0
-		arrowObjIndex= GenerateAnObject(arrowobj)
 		if arrows[0] == nil then	
 			arrowIndex = 0 
 		end
 		table.insert(arrows, arrowIndex, arrowObjIndex)
 		arrowIndex = arrowIndex + 1
-		-- debug.debug()
-	end
 	
+end
+
+
+function ShootArrow() 
+
+	mousePos = camera1:mousepos()
+	local mousex, mousey = mousePos:unpack()
+	xDistance =  mousex - bodies[player]:getX()
+	yDistance = mousey - bodies[player]:getY()
+	hypotenuse = math.sqrt((xDistance*xDistance) + (yDistance*yDistance))
+	ximpulse = (xDistance/hypotenuse)
+	yimpulse = (yDistance/hypotenuse)
+	arrowobj = {}
+	arrowobj.type = 'A'
+	arrowobj.x = bodies[player]:getX() + ximpulse * 10
+	arrowobj.y = bodies[player]:getY() + yimpulse * 10
+	-- arrowobj.x = mousex
+	-- arrowobj.y = mousey
+	arrowobj.mass = 5
+	arrowobj.inertia = 0
+	arrowobj.width = 10
+	arrowobj.height = 10
+	arrowobj.angle = 0
+	arrowobj.friction = 0
+	arrowObjIndex = GenerateAnObject(arrowobj)
+
+	ApplyImpulse(arrowObjIndex, ximpulse * 100, yimpulse * 100)
+
+end
+
+
+function MoveArrowPlz()
+
+		-- ApplyImpulse(arrowObjIndex, -400, -400)
+
 end
 
 
@@ -53,11 +71,6 @@ end
 
 function RemoveArrow(thisArrowIndex)
 
-	if thisArrowIndex == 0 then
-		arrows[0] = nil
-	else
-		table.remove(arrows, thisArrowIndex)
-	end
-
+		arrows[thisArrowIndex] = nil
 
 end

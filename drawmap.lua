@@ -5,13 +5,13 @@ function love.mousepressed (x, y, button )
 	
 	mousePos = camera1:mousepos()
 
-		if button == "r" then
-			if drawType == 5 then
-				drawType = 1
-			else
-				drawType = drawType + 1
-			end
+	if button == "r" then
+		if drawType == 5 then
+			drawType = 1
+		else
+			drawType = drawType + 1
 		end
+	end
 	-- end
 
 	if button == "l" then
@@ -50,6 +50,8 @@ function love.mousereleased (x, y, button)
 			newobj.angle = 0			
 			newobj.friction = .25
 			CreatePlayer(GenerateAnObject(newobj))
+		elseif drawType == 1 and player ~= nil then
+			ShootArrow()
 		elseif drawType == 2 then
 			newobj.type = 'E'
 			mousepos = camera1:mousepos()
