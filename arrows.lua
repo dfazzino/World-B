@@ -5,7 +5,10 @@ function PlaceArrow(arrowObjIndex)
 		if arrows[0] == nil then	
 			arrowIndex = 0 
 		end
-		table.insert(arrows, arrowIndex, arrowObjIndex)
+        newArrow = {}
+		newArrow.objIndex = arrowObjIndex
+        newArrow.setForRemoval = false
+		table.insert(arrows, arrowIndex, newArrow)
 		arrowIndex = arrowIndex + 1
 	
 end
@@ -69,8 +72,39 @@ function ArrowExists(thisArrowInd)
 end
 
 
-function RemoveArrow(thisArrowIndex)
+function SetForRemoval(thisArrow)
 
-		arrows[thisArrowIndex] = nil
+    arrows[thisArrow].setForRemoval = true
+
+end
+
+
+function RemoveArrows()
+
+	removedObjIndex = {}
+
+    for i, arrow in pairs(arrows) do
+        if arrow.setForRemoval == true then
+            RemoveBody(arrow.objIndex)  
+            RemoveShape(arrow.objIndex)
+            arrows[i] = nil
+            print ('removing arrow ' .. i)
+			table.insert(removedObjIndex, arrow.objIndex)
+			-- debug.debug()
+        end
+    end
+	
+	return removedObjIndex
+	
+end
+
+
+function AdjustArrowObjIndex(objIndex)
+
+	for i, arrow in pairs(arrows) do
+		if arrow.objIndex > objIndex then
+			arrow.objIndex = arrow.objIndex - 1
+		end
+	end
 
 end

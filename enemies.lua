@@ -14,3 +14,14 @@ function MoveEnemies (dt)
 
 end
 
+
+function AdjustEnemyObjIndex(objIndex)
+
+	for i, enemy in pairs(enemies) do
+		if enemy > objIndex then
+			enemy = enemy - 1
+		end
+	end
+
+end
+

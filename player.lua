@@ -40,10 +40,6 @@ function PlayerKeyReleased(key)
 		ShootArrow()
 	end
 	
-	if key == '0' then
-		MoveArrowPlz()
-	end
-	
 	if key == 'z'	then
         
 		camera1.zoom = camera1.zoom + .08
@@ -55,6 +51,12 @@ function PlayerKeyReleased(key)
 		arrz = GetArrows()
 		debug.debug()
 	end	
+	if key == '0' then
+		AddText("test", 0,0)
+	end
+	if key == '9' then
+		RemoveText(0)
+	end
 		
 	
 end

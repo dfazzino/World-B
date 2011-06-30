@@ -39,6 +39,7 @@ function drawBoxThings()
 		boxheight = y2 - y1 --calculate the height of the box
 
 		if s.objType == "F" then
+			-- print (i)
 			love.graphics.setColor(12, math.random(50,255), 40) -- pine green BUZZING flies (unscented)
 			love.graphics.rectangle("fill", bodies[i]:getX() - boxwidth/2, bodies[i]:getY() - boxheight/2, boxwidth, boxheight)
 		end
@@ -82,3 +83,22 @@ function TempDraw ()
 
 end
 
+
+function AddText(words, x, y)
+
+	texts[textIndex] = {}
+	texts[textIndex].words = words
+	texts[textIndex].x = x
+	texts[textIndex].y = y
+	textIndex = textIndex + 1
+	
+	return textIndex
+	
+end
+
+
+function RemoveText(thisTextIndex)
+
+	texts[thisTextIndex] = nil
+	
+end

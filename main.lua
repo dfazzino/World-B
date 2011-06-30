@@ -139,6 +139,9 @@ function love.update(dt)
 	PlayerKeyDown(dt)
     MoveEnemies(dt)
     MoveFlies(dt)
+	removedObjIndexes = RemoveArrows()
+	AdjustObjIndexes(removedObjIndexes)
+    CheckFlyTargets()
 	ContinueDrawing(CheckMouse())
 end
 

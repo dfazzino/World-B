@@ -95,15 +95,30 @@ end
 function RemoveShape (shapeNum)
 
 	print ("shapenum " .. shapeNum)
+    shapes[shapeNum].shape:destroy()
 	shapes[shapeNum] = nil
-	
+	table.remove(shapes, shapeNum)
 end
 
 
 function RemoveBody (bodyNum)
 
 	print ("bodynum " .. bodyNum)
+    bodies[bodyNum]:destroy()
 	bodies[bodyNum] = nil
+	table.remove(bodies, bodyNum)
+	-- objectIndex = objectIndex - 1
+	
+end
+
+
+function AdjustObjIndexes (removedObjIndexes)
+
+	for i, thisObjIndex in pairs(removedObjIndexes) do
+		AdjustFlyObjIndex(thisObjIndex)
+		AdjustArrowObjIndex(thisObjIndex)
+		AdjustEnemyObjIndex(thisObjIndex)
+	end
 
 end
 
@@ -118,7 +133,11 @@ function add(obj1, obj2, contact)
 	if shapes[obj1] ~= nil and shapes[obj2] ~= nil then
 	
 		if (shapes[obj1].objType == 'G' or shapes[obj1].objType == 'A') and shapes[obj2].objType == 'A' then
-			PlaceArrow(obj2)
+            if not shapes[obj2].isArrow then 
+                PlaceArrow(obj2)
+                shapes[obj2].isArrow = true
+           --     debug.debug()
+            end
 	        arrX, arrY = contact:getPosition( )
 			bodies[obj2]:setMass(0,0,0,0)
 			bodies[obj2]:putToSleep()

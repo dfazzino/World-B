@@ -109,18 +109,18 @@ function AttackArrow(thisFly)
 		
 		if arrowset ~= false then
 			for j, arrow in pairs(arrowset) do
-				xDistance = bodies[arrow]:getX() - bodies[thisFly.objIndex]:getX()
-				yDistance = bodies[arrow]:getY() - bodies[thisFly.objIndex]:getY()
+				xDistance = bodies[arrow.objIndex]:getX() - bodies[thisFly.objIndex]:getX()
+				yDistance = bodies[arrow.objIndex]:getY() - bodies[thisFly.objIndex]:getY()
 				hypotenuse = math.sqrt((xDistance*xDistance) + (yDistance*yDistance))
 				if settarget == nil then
 					hldHypotenuse = hypotenuse
-					settarget = arrow
+					settarget = arrow.objIndex
 					arrowNum = j
 					--debug.debug()
 				else 
 					if hypotenuse < hldHypotenuse then
 						hldHypotenuse = hypotenuse
-						settarget = arrow
+						settarget = arrow.objIndex
 						--debug.debug()
 					end
 				end
@@ -150,10 +150,8 @@ function omNomNom(thisFly)
 			thisFly.omNomTimer = love.timer.getMicroTime( )
 			-- print (thisFly.omNomTimer - thisFly.omNomTime)
 			if thisFly.omNomTimer - thisFly.omNomTime > 3 then
-				RemoveArrow(thisFly.arrowNum)
-				RemoveShape(thisFly.target)
-				-- RemoveBody(thisFly.target)
-				-- debug.debug()
+                SetForRemoval(thisFly.arrowNum)
+				thisFly.omNomTime = love.timer.getMicroTime( )
 				-- thisFly.target = nil
 			end
 		end
@@ -173,3 +171,29 @@ function GetSZ()
 
 end
 
+
+function CheckFlyTargets()
+
+    for i,fly in pairs(flies) do
+       -- print (ArrowExists(fly.arrowNum))
+		if fly.arrowNum ~= nil then
+		   if not ArrowExists(fly.arrowNum) then
+				fly.target = nil
+				fly.arrowNum = nil
+				-- debug.debug()
+		   end
+		end
+    end
+
+end
+
+
+function AdjustFlyObjIndex(objIndex)
+
+	for i, fly in pairs(flies) do
+		if fly.objIndex > objIndex then
+			fly.objIndex = fly.objIndex - 1
+		end
+	end
+
+end
