@@ -94,30 +94,29 @@ end
 
 function RemoveShape (shapeNum)
 
-	print ("shapenum " .. shapeNum)
     shapes[shapeNum].shape:destroy()
-	shapes[shapeNum] = nil
 	table.remove(shapes, shapeNum)
 end
 
 
 function RemoveBody (bodyNum)
 
-	print ("bodynum " .. bodyNum)
     bodies[bodyNum]:destroy()
-	bodies[bodyNum] = nil
 	table.remove(bodies, bodyNum)
-	-- objectIndex = objectIndex - 1
+	objectIndex = objectIndex - 1
 	
 end
 
 
 function AdjustObjIndexes (removedObjIndexes)
-
 	for i, thisObjIndex in pairs(removedObjIndexes) do
+        print ('adjustingFlyObj')
 		AdjustFlyObjIndex(thisObjIndex)
+        print ('adjustingArrowObj')
 		AdjustArrowObjIndex(thisObjIndex)
+        print ('adjustingEnemyObj')
 		AdjustEnemyObjIndex(thisObjIndex)
+        --debug.debug()
 	end
 
 end
@@ -142,5 +141,20 @@ function add(obj1, obj2, contact)
 			bodies[obj2]:setMass(0,0,0,0)
 			bodies[obj2]:putToSleep()
 		end	
+
 	end
+end
+
+
+function persist(obj1,obj2, contact)
+
+		-- if (shapes[obj1].objType == 'F' and shapes[obj2].objType == 'A') or (shapes[obj1].objType == 'A' and shapes[obj1].objType == 'F') then
+    
+            -- if shapes[obj1].objType == 'A' then
+                -- Omnomnom(obj1, obj2)
+            -- else
+                -- Omnomnom(obj2, obj1)
+            -- end
+        -- end
+
 end
