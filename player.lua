@@ -48,9 +48,27 @@ function PlayerKeyReleased(key)
 		camera1.zoom = camera1.zoom - .08 
 	end	
 	if key == '1' 	then
-		arrz = GetArrows()
-		debug.debug()
+        print 'obj'
+		for i, obj in pairs(shapes) do
+            print (i , obj.objType)
+        end
+        print 'flies'
+		for i, fly in pairs(flies) do
+            print (i , fly.target, fly.arrowNum)
+        end
+        print 'arrows'
+		for i, arrow in pairs(arrows) do
+            print (i , arrow.objIndex)
+        end
+        
+        
+		-- debug.debug()
 	end	
+
+    if key == 't' then
+        getTarget = not getTarget
+    end
+
 	if key == '0' then
 		AddText("test", 0,0)
 	end
@@ -60,6 +78,25 @@ function PlayerKeyReleased(key)
 		
 	
 end
+
+
+function printobj()
+
+        print 'obj'
+		for i, obj in pairs(shapes) do
+            print (i , obj.objType)
+        end
+        print 'flies'
+		for i, fly in pairs(flies) do
+            print (i , fly.target, fly.arrowNum)
+        end
+        print 'arrows'
+		for i, arrow in pairs(arrows) do
+            print (i , arrow.objIndex)
+        end
+
+end
+
 
 function PlayerKeyDown(dt)
 
