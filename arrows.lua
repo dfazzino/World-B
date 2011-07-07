@@ -1,11 +1,12 @@
 arrows = {}
-arrowIndex = 0
+arrowIndex = 1
 function PlaceArrow(arrowObjIndex)
 
-		if arrows[0] == nil then	
-			arrowIndex = 0 
+		if arrows[1] == nil then	
+			arrowIndex = 1
 		end
         newArrow = {}
+        newArrow.flies = {}
 		newArrow.objIndex = arrowObjIndex
         newArrow.setForRemoval = false
 		table.insert(arrows, arrowIndex, newArrow)
@@ -50,13 +51,8 @@ end
 
 
 function GetArrows()
-	
-	-- print (arrows[0])
-	if arrows[0] == nil then
-		return false
-	else
-		return arrows
-	end
+
+	return arrows
 		
 end
 
@@ -75,25 +71,28 @@ end
 function SetForRemoval(thisArrow)
 
     arrows[thisArrow].setForRemoval = true
+    bodies[arrows[thisArrow].objIndex]:setX(99999)
+    bodies[arrows[thisArrow].objIndex]:setY(99999)
 
 end
 
 
 function RemoveArrows()
-
 	removedObjIndex = {}
 
     for i, arrow in pairs(arrows) do
         if arrow.setForRemoval == true then
-            RemoveBody(arrow.objIndex)  
-            RemoveShape(arrow.objIndex)
-            arrows[i] = nil
-            print ('removing arrow ' .. i)
 			table.insert(removedObjIndex, arrow.objIndex)
-			-- debug.debug()
+            RemoveShape(arrow.objIndex)
+            RemoveBody(arrow.objIndex)  
+            table.remove(arrows, i)
+            if #arrows == 0 then
+                arrows = {}
+            end
+            print ('removing arrow ' .. i)
+            -- debug.debug()
         end
     end
-	
 	return removedObjIndex
 	
 end
@@ -108,3 +107,10 @@ function AdjustArrowObjIndex(objIndex)
 	end
 
 end
+
+
+-- function Omnomnom(thisArrow, thisFly)
+
+    -- table.insert(arrows[thisArrow].flies, thisfly)
+
+-- end
