@@ -22,8 +22,9 @@ local tilesetImage
 local tileSize -- size of tiles in pixels
 local tileQuads = {} -- parts of the tileset used for different tiles
 local tilesetSprite
-
+local removeArrowTime = love.timer.getMicroTime( )
 local worldupdate = true
+
 
 function love.load()
 	math.randomseed(love.timer.getMicroTime( ))
@@ -136,12 +137,17 @@ function love.update(dt)
 		camera1:translate(temp)
 	end
 		
+    removeArrowTimer = love.timer.getMicroTime( )
+    if removeArrowTimer - removeArrowTime > 1 then
+        removedObjIndexes = RemoveArrows()
+        AdjustObjIndexes(removedObjIndexes)
+        removeObjIndexes = nil
+    end
+
 	PlayerKeyDown(dt)
-    MoveEnemies(dt)
-    MoveFlies(dt)
-	removedObjIndexes = RemoveArrows()
-	AdjustObjIndexes(removedObjIndexes)
-    CheckFlyTargets()
+    FlyProcessing()
+
+
 	ContinueDrawing(CheckMouse())
 end
 
