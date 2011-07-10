@@ -100,17 +100,24 @@ function GetFlyTarget(thisFly)
         xDistance = bodies[arrow.objIndex]:getX() - bodies[thisFly.objIndex]:getX()
         yDistance = bodies[arrow.objIndex]:getY() - bodies[thisFly.objIndex]:getY()
         hypotenuse = math.sqrt((xDistance*xDistance) + (yDistance*yDistance))
-        if settarget == nil then
-            hldHypotenuse = hypotenuse
-            settarget = arrow.objIndex
-            arrowNum = j
-        else 
-            if hypotenuse < hldHypotenuse then
-                hldHypotenuse = hypotenuse
-                settarget = arrow.objIndex
-                arrowNum = j
-            end
-        end
+		
+		xDistSq = xDistance * xDistance
+		yDistSq = yDistance * yDistance
+		distance = math.sqrt(xDistSq + yDistSq)
+
+		if distance < 600 then
+			if settarget == nil then
+				hldHypotenuse = hypotenuse
+				settarget = arrow.objIndex
+				arrowNum = j
+			else 
+				if hypotenuse < hldHypotenuse then
+					hldHypotenuse = hypotenuse
+					settarget = arrow.objIndex
+					arrowNum = j
+				end
+			end
+		end
     end
     end
 
