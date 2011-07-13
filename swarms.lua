@@ -135,14 +135,14 @@ function ProcessImpulses(thisFly)
         thisFly.wingsTimer = love.timer.getMicroTime( )
         if thisFly.wingsTimer - thisFly.wingsTime > .03 then
             if bodies[thisFly.target]:getX() < bodies[thisFly.objIndex]:getX() then
-                dx = -.01
+                dx = -1
             else
-                dx = .01
+                dx = 1
             end
             if bodies[thisFly.target]:getY() < bodies[thisFly.objIndex]:getY() then
-                dy = -.01
+                dy = -1
             else
-                dy = .01
+                dy = 1
             end
             ApplyImpulse(thisFly.objIndex, dx , dy )
         end
