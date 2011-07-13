@@ -22,7 +22,6 @@ local tilesetImage
 local tileSize -- size of tiles in pixels
 local tileQuads = {} -- parts of the tileset used for different tiles
 local tilesetSprite
-local removeArrowTime = love.timer.getMicroTime( )
 local worldupdate = true
 
 
@@ -137,13 +136,7 @@ function love.update(dt)
 		camera1:translate(temp)
 	end
 		
-    removeArrowTimer = love.timer.getMicroTime( )
-    if removeArrowTimer - removeArrowTime > 1 then
-        removedObjIndexes = RemoveArrows()
-        AdjustObjIndexes(removedObjIndexes)
-        removeObjIndexes = nil
-    end
-
+    ArrowProcessing()
 	PlayerKeyDown(dt)
     FlyProcessing()
 
