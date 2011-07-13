@@ -1,160 +1,151 @@
-physicsg = {}
-bodies = {} -- i guess these need to be global?
-shapes = {}
-world = nil
+arrows = {}
+arrowIndex = 1
+local removeArrowTime = love.timer.getMicroTime( )
 
-objectIndex = 0
+function ArrowProcessing()
 
-function CreateWorld()
-	world = love.physics.newWorld(-2000, -2000, 2000, 2000)  -- how big is the world, anyway?
-	world:setGravity(0, 700)
-	world:setMeter(64)
-	world:setCallbacks( add, persist, remve, result )
+    for i, arrow in pairs(arrows) do
+
+        ArrowInAir(arrow)
+        removeArrowTimer = love.timer.getMicroTime( )
+        if removeArrowTimer - removeArrowTime > 1 then
+            removedObjIndexes = RemoveArrows()
+            AdjustObjIndexes(removedObjIndexes)
+            removeObjIndexes = nil
+        end
+    end
 end
 
-function GenerateAnObject(gameobject)
 
-    thisIndex = objectIndex
-    objectIndex = objectIndex + 1
+function PlaceArrow(arrowObjIndex)
 
-	objtype		= gameobject.type
-	x			= gameobject.x
-	y	 		= gameobject.y
-	mass 		= gameobject.mass
-	inertia		= gameobject.inertia
-	width		= gameobject.width
-	height		= gameobject.height
-	angle		= gameobject.angle
-	friction	= gameobject.friction
+		if arrows[1] == nil then	
+			arrowIndex = 1
+		end
+        newArrow = {}
+        newArrow.flies = {}
+		newArrow.objIndex = arrowObjIndex
+        newArrow.setForRemoval = false
+        newArrow.inAir = true
+        newArrow.airTime = love.timer.getMicroTime( )
+		table.insert(arrows, arrowIndex, newArrow)
+		arrowIndex = arrowIndex + 1
 	
-
-	-- print(	"Created obj " 	
-			-- .. objtype 
-			-- .. " (x=" 		.. x 
-			-- .. ", y=" 		.. y 
-			-- .. ", m=" 	.. mass 
-			-- .. ", i=" .. inertia 
-			-- .. ", w=" 	.. width 
-			-- .. ", h=" 	.. height
-			-- .. ", a=" 	.. angle
-			-- .. ", f=" 	.. friction
-			-- .. ", idx=" 	.. thisIndex
-			-- .. ")"
-			-- )
-
-	body = love.physics.newBody(world, x, y, mass, inertia)
-	shape = love.physics.newRectangleShape(body, 0, 0, width, height, angle) -- x,y = 0 because body anchors to center of shape
-	shape:setData(thisIndex)
-	shape:setFriction(friction)
-	
-	bodies[thisIndex] = body 
-	shapes[thisIndex] = {}
-	shapes[thisIndex].shape = shape
-	shapes[thisIndex].objType = gameobject.type
-
-    return thisIndex
-
 end
 
-function ApplyImpulse(i, ximpulse, yimpulse)
 
-    -- debug.debug()
+function ShootArrow() 
 
-    bodies[i]:applyImpulse(ximpulse, yimpulse)
+	mousePos = camera1:mousepos()
+	local mousex, mousey = mousePos:unpack()
+	xDistance =  mousex - bodies[player]:getX()
+	yDistance = mousey - bodies[player]:getY()
+	hypotenuse = math.sqrt((xDistance*xDistance) + (yDistance*yDistance))
+	ximpulse = (xDistance/hypotenuse)
+	yimpulse = (yDistance/hypotenuse)
+	arrowobj = {}
+	arrowobj.type = 'A'
+	arrowobj.x = bodies[player]:getX() + ximpulse * 10
+	arrowobj.y = bodies[player]:getY() + yimpulse * 10
+	-- arrowobj.x = mousex
+	-- arrowobj.y = mousey
+	arrowobj.mass = 5
+	arrowobj.inertia = 0
+	arrowobj.width = 10
+	arrowobj.height = 10
+	arrowobj.angle = 0
+	arrowobj.friction = 0
+	arrowObjIndex = GenerateAnObject(arrowobj)
+    PlaceArrow(arrowObjIndex)
+	ApplyImpulse(arrowObjIndex, ximpulse * 100, yimpulse * 100)
 
 end
 
 
-function GetObject(writex)
-	writedata = ""
-	
-	for i,s in pairs(shapes) do
-		if s.shape:getData() ~= 'F' then 
-			x1, y1, x2, y2, x3, y3, x4, y4 = s.shape:getBoundingBox() --get the x,y coordinates of all 4 corners of the box.
-			if x3 < x2 then
-				tempx = x2
-				x2 = x3
-				x3 = tempx
-			end
-			if y2 < y1 then
-				tempx = y1
-				y1 = y2
-				y2 = tempx
-			end
-			boxwidth = x3 - x2 --calculate the width of the box
-			boxheight = y2 - y1 --calculate the height of the box
+function ArrowInAir(thisArrow)
+
+        if thisArrow.inAir == true then
+            thisArrow.airTimer = love.timer.getMicroTime( )
+            if thisArrow.airTimer - thisArrow.airTime > 1 then
+                if bodies[thisArrow.objIndex]:isStatic() == false then
+                    thisArrow.setForRemoval = true
+                    thisArrow.inAir = false
+                    -- debug.debug()
+                end
+            end
+        end
+   
+end
+
+
+function MoveArrowPlz()
+
+		-- ApplyImpulse(arrowObjIndex, -400, -400)
+
+end
+
+
+function GetArrows()
+
+	return arrows
 		
-			writedata =  (writedata .. s.objType .. ' ' .. bodies[i]:getX() .. ' ' .. bodies[i]:getY() .. ' ' .. bodies[i]:getMass() .. ' ' .. bodies[i]:getInertia() .. ' ' .. boxwidth.. ' ' .. boxheight .. ' ' .. 0 .. ' ' .. .25 .. ' ')
+end
+
+
+function ArrowExists(thisArrowInd)
+
+	if arrows[thisArrowInd] == nil then
+		return false
+	else
+		return true
+	end
+
+end
+
+
+function SetForRemoval(thisArrow)
+
+    arrows[thisArrow].setForRemoval = true
+    bodies[arrows[thisArrow].objIndex]:setX(99999)
+    bodies[arrows[thisArrow].objIndex]:setY(99999)
+
+end
+
+
+function RemoveArrows()
+	removedObjIndex = {}
+
+    for i, arrow in pairs(arrows) do
+        if arrow.setForRemoval == true then
+			table.insert(removedObjIndex, arrow.objIndex)
+            RemoveShape(arrow.objIndex)
+            RemoveBody(arrow.objIndex)  
+            table.remove(arrows, i)
+            if #arrows == 0 then
+                arrows = {}
+            end
+            print ('removing arrow ' .. i)
+            -- debug.debug()
+        end
+    end
+	return removedObjIndex
+	
+end
+
+
+function AdjustArrowObjIndex(objIndex)
+
+	for i, arrow in pairs(arrows) do
+		if arrow.objIndex > objIndex then
+			arrow.objIndex = arrow.objIndex - 1
 		end
 	end
-	
-	return(writedata)
-end
-
-
-function RemoveShape (shapeNum)
-
-    shapes[shapeNum].shape:destroy()
-	table.remove(shapes, shapeNum)
-end
-
-
-function RemoveBody (bodyNum)
-
-    bodies[bodyNum]:destroy()
-	table.remove(bodies, bodyNum)
-	objectIndex = objectIndex - 1
-	
-end
-
-
-function AdjustObjIndexes (removedObjIndexes)
-	for i, thisObjIndex in pairs(removedObjIndexes) do
-        print ('adjustingFlyObj')
-		AdjustFlyObjIndex(thisObjIndex)
-        print ('adjustingArrowObj')
-		AdjustArrowObjIndex(thisObjIndex)
-        print ('adjustingEnemyObj')
-		AdjustEnemyObjIndex(thisObjIndex)
-        --debug.debug()
-	end
 
 end
 
 
-function remve(obj1, obj2, contact)
+-- function Omnomnom(thisArrow, thisFly)
 
-end
+    -- table.insert(arrows[thisArrow].flies, thisfly)
 
-
-function add(obj1, obj2, contact)
-	
-	if shapes[obj1] ~= nil and shapes[obj2] ~= nil then
-	
-		if (shapes[obj1].objType == 'G' or shapes[obj1].objType == 'A') and shapes[obj2].objType == 'A' then
-       --     if not shapes[obj2].isArrow then 
-           --    PlaceArrow(obj2)
-            --    shapes[obj2].isArrow = true
-           --     debug.debug()
-      --      end
-	        arrX, arrY = contact:getPosition( )
-			bodies[obj2]:setMass(0,0,0,0)
-			bodies[obj2]:putToSleep()
-		end	
-
-	end
-end
-
-
-function persist(obj1,obj2, contact)
-
-		-- if (shapes[obj1].objType == 'F' and shapes[obj2].objType == 'A') or (shapes[obj1].objType == 'A' and shapes[obj1].objType == 'F') then
-    
-            -- if shapes[obj1].objType == 'A' then
-                -- Omnomnom(obj1, obj2)
-            -- else
-                -- Omnomnom(obj2, obj1)
-            -- end
-        -- end
-
-end
+-- end
