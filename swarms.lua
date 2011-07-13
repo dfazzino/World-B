@@ -60,6 +60,7 @@ function AddFiles(swarmZoneIndex)
 		newFly.objIndex = GenerateAnObject(mygameobject)
 		newFly.target = nil
 		newFly.omNomTime = love.timer.getMicroTime( )
+		newFly.wingsTime = love.timer.getMicroTime( )
 		table.insert(flies, fliesx, newFly)
 	-- end
 	
@@ -99,25 +100,24 @@ function GetFlyTarget(thisFly)
 
         xDistance = bodies[arrow.objIndex]:getX() - bodies[thisFly.objIndex]:getX()
         yDistance = bodies[arrow.objIndex]:getY() - bodies[thisFly.objIndex]:getY()
-        hypotenuse = math.sqrt((xDistance*xDistance) + (yDistance*yDistance))
-		
-		xDistSq = xDistance * xDistance
-		yDistSq = yDistance * yDistance
-		distance = math.sqrt(xDistSq + yDistSq)
+        -- xDistSq = xDistance * xDistance
+        -- yDistSq = yDistance * yDistance
 
-		if distance < 600 then
-			if settarget == nil then
-				hldHypotenuse = hypotenuse
-				settarget = arrow.objIndex
-				arrowNum = j
-			else 
-				if hypotenuse < hldHypotenuse then
-					hldHypotenuse = hypotenuse
-					settarget = arrow.objIndex
-					arrowNum = j
-				end
-			end
-		end
+        -- distance = math.sqrt(xDistSq + yDistSq)
+        -- if distance < 1000 then
+            -- hypotenuse = math.sqrt((xDistance*xDistance) + (yDistance*yDistance))
+            if settarget == nil then
+                hldHypotenuse = hypotenuse
+                settarget = arrow.objIndex
+                arrowNum = j
+            else 
+                if hypotenuse < hldHypotenuse then
+                    hldHypotenuse = hypotenuse
+                    settarget = arrow.objIndex
+                    arrowNum = j
+                end
+            end
+        -- end
     end
     end
 
@@ -132,9 +132,20 @@ end
 function ProcessImpulses(thisFly)
 
     if thisFly.target ~= nil then
-        dx = bodies[thisFly.target]:getX() - bodies[thisFly.objIndex]:getX() - math.random(-20,20)
-        dy = bodies[thisFly.target]:getY() - bodies[thisFly.objIndex]:getY() - math.random(0,20)
-        ApplyImpulse(thisFly.objIndex, dx , dy )
+        thisFly.wingsTimer = love.timer.getMicroTime( )
+        if thisFly.wingsTimer - thisFly.wingsTime > .03 then
+            if bodies[thisFly.target]:getX() < bodies[thisFly.objIndex]:getX() then
+                dx = -.01
+            else
+                dx = .01
+            end
+            if bodies[thisFly.target]:getY() < bodies[thisFly.objIndex]:getY() then
+                dy = -.01
+            else
+                dy = .01
+            end
+            ApplyImpulse(thisFly.objIndex, dx , dy )
+        end
     end
 
 end
