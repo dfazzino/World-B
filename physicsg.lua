@@ -132,11 +132,11 @@ function add(obj1, obj2, contact)
 	if shapes[obj1] ~= nil and shapes[obj2] ~= nil then
 	
 		if (shapes[obj1].objType == 'G' or shapes[obj1].objType == 'A') and shapes[obj2].objType == 'A' then
-            if not shapes[obj2].isArrow then 
-                PlaceArrow(obj2)
-                shapes[obj2].isArrow = true
+       --     if not shapes[obj2].isArrow then 
+           --    PlaceArrow(obj2)
+            --    shapes[obj2].isArrow = true
            --     debug.debug()
-            end
+      --      end
 	        arrX, arrY = contact:getPosition( )
 			bodies[obj2]:setMass(0,0,0,0)
 			bodies[obj2]:putToSleep()
