@@ -1,5 +1,22 @@
 arrows = {}
 arrowIndex = 1
+local removeArrowTime = love.timer.getMicroTime( )
+
+function ArrowProcessing()
+
+    for i, arrow in pairs(arrows) do
+
+        ArrowInAir(arrow)
+        removeArrowTimer = love.timer.getMicroTime( )
+        if removeArrowTimer - removeArrowTime > 1 then
+            removedObjIndexes = RemoveArrows()
+            AdjustObjIndexes(removedObjIndexes)
+            removeObjIndexes = nil
+        end
+    end
+end
+
+
 function PlaceArrow(arrowObjIndex)
 
 		if arrows[1] == nil then	
@@ -9,6 +26,8 @@ function PlaceArrow(arrowObjIndex)
         newArrow.flies = {}
 		newArrow.objIndex = arrowObjIndex
         newArrow.setForRemoval = false
+        newArrow.inAir = true
+        newArrow.airTime = love.timer.getMicroTime( )
 		table.insert(arrows, arrowIndex, newArrow)
 		arrowIndex = arrowIndex + 1
 	
@@ -37,9 +56,25 @@ function ShootArrow()
 	arrowobj.angle = 0
 	arrowobj.friction = 0
 	arrowObjIndex = GenerateAnObject(arrowobj)
-
+    PlaceArrow(arrowObjIndex)
 	ApplyImpulse(arrowObjIndex, ximpulse * 100, yimpulse * 100)
 
+end
+
+
+function ArrowInAir(thisArrow)
+
+        if thisArrow.inAir == true then
+            thisArrow.airTimer = love.timer.getMicroTime( )
+            if thisArrow.airTimer - thisArrow.airTime > 1 then
+                if bodies[thisArrow.objIndex]:isStatic() == false then
+                    thisArrow.setForRemoval = true
+                    thisArrow.inAir = false
+                    -- debug.debug()
+                end
+            end
+        end
+   
 end
 
 
