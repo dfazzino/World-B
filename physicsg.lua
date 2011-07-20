@@ -6,7 +6,7 @@ world = nil
 objectIndex = 0
 
 function CreateWorld()
-	world = love.physics.newWorld(-2000, -2000, 2000, 2000)  -- how big is the world, anyway?
+	world = love.physics.newWorld(-4000, -4000, 4000, 4000)  -- how big is the world, anyway?
 	world:setGravity(0, 700)
 	world:setMeter(64)
 	world:setCallbacks( add, persist, remve, result )
@@ -26,7 +26,6 @@ function GenerateAnObject(gameobject)
 	height		= gameobject.height
 	angle		= gameobject.angle
 	friction	= gameobject.friction
-	
 
 	-- print(	"Created obj " 	
 			-- .. objtype 
@@ -43,9 +42,10 @@ function GenerateAnObject(gameobject)
 			-- )
 
 	body = love.physics.newBody(world, x, y, mass, inertia)
-	shape = love.physics.newRectangleShape(body, 0, 0, width, height, angle) -- x,y = 0 because body anchors to center of shape
+	shape = love.physics.newRectangleShape(body, 0, 0, width, height) -- x,y = 0 because body anchors to center of shape
 	shape:setData(thisIndex)
 	shape:setFriction(friction)
+	shape:setRestitution(0)
 	
 	bodies[thisIndex] = body 
 	shapes[thisIndex] = {}
@@ -63,13 +63,27 @@ function ApplyImpulse(i, ximpulse, yimpulse)
     bodies[i]:applyImpulse(ximpulse, yimpulse)
 
 end
+function ApplyForce(i, ximpulse, yimpulse)
+
+    -- debug.debug()
+
+    bodies[i]:applyForce(ximpulse, yimpulse)
+
+end
+
+
+function SetAngle(i, angle)
+
+    bodies[i]:setAngle(angle)
+
+end
 
 
 function GetObject(writex)
 	writedata = ""
 	
 	for i,s in pairs(shapes) do
-		if s.shape:getData() ~= 'F' then 
+		if s.shape:getData() ~= 'F' and s.shape:getData() ~= 'A' then 
 			x1, y1, x2, y2, x3, y3, x4, y4 = s.shape:getBoundingBox() --get the x,y coordinates of all 4 corners of the box.
 			if x3 < x2 then
 				tempx = x2
@@ -92,8 +106,18 @@ function GetObject(writex)
 end
 
 
+function GetVelocity(objIndex)
+
+    tempx, tempy = bodies[objIndex]:getLinearVelocity()
+    tempVect = vector(tempx, tempy)
+    return tempVect
+
+end
+
+
 function RemoveShape (shapeNum)
 
+    bodies[shapeNum]:putToSleep()
     shapes[shapeNum].shape:destroy()
 	table.remove(shapes, shapeNum)
 end
@@ -124,24 +148,50 @@ end
 
 function remve(obj1, obj2, contact)
 
+	if shapes[obj1] ~= nil and shapes[obj2] ~= nil then 
+
+        if (shapes[obj2].objType == 'P' and (shapes[obj1].objType == 'G' or shapes[obj1].objType == 'I' or shapes[obj2].objType == 'A' )) then
+			collx, colly = contact:getNormal()
+			if collx == 0 and colly == -64 then
+				SetPlayerState(1)
+			end
+		end
+		
+        if (shapes[obj1].objType == 'P' and (shapes[obj2].objType == 'G' or shapes[obj2].objType == 'I' or shapes[obj2].objType == 'A')) then
+			collx, colly = contact:getNormal()
+			if collx == 0 and colly == 64 then
+				SetPlayerState(1)
+			end			
+		end
+
+	end
+
 end
 
 
 function add(obj1, obj2, contact)
 	
-	if shapes[obj1] ~= nil and shapes[obj2] ~= nil then
+	if shapes[obj1] ~= nil and shapes[obj2] ~= nil then 
 	
-		if (shapes[obj1].objType == 'G' or shapes[obj1].objType == 'A') and shapes[obj2].objType == 'A' then
-       --     if not shapes[obj2].isArrow then 
-           --    PlaceArrow(obj2)
-            --    shapes[obj2].isArrow = true
-           --     debug.debug()
-      --      end
+		if ((shapes[obj1].objType == 'G' or shapes[obj1].objType == 'I') or shapes[obj1].objType == 'A') and shapes[obj2].objType == 'A' then
 	        arrX, arrY = contact:getPosition( )
 			bodies[obj2]:setMass(0,0,0,0)
 			bodies[obj2]:putToSleep()
 		end	
 
+        if (shapes[obj2].objType == 'P' and (shapes[obj1].objType == 'G' or shapes[obj1].objType == 'I' or shapes[obj1].objType == 'A')) then
+			collx, colly = contact:getNormal()
+			if collx == 0 and colly == -64 then
+				SetPlayerState(0)
+			end
+			
+		end
+        if (shapes[obj1].objType == 'P' and (shapes[obj2].objType == 'G' or shapes[obj2].objType == 'I' or shapes[obj2].objType == 'A')) then
+			collx, colly = contact:getNormal()
+			if collx == 0 and colly == 64 then
+				SetPlayerState(0)
+			end			
+		end
 	end
 end
 
@@ -156,5 +206,20 @@ function persist(obj1,obj2, contact)
                 -- Omnomnom(obj2, obj1)
             -- end
         -- end
+
+end
+
+
+function ClearPhysics()
+
+    -- for i, shape in pairs(shapes) do
+        -- RemoveShape(i)
+    -- end    
+    -- for i, body in pairs(bodies) do
+        -- RemoveBody(i)
+    -- end
+    shapes = {}
+    bodies = {}
+    objectIndex = 0
 
 end

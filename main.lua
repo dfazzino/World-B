@@ -125,27 +125,18 @@ function love.update(dt)
 		world:update(dt)
 	end
 
-	TEsound.cleanup()
-
-	if love.keyboard.isDown("a")  then
-        temp = vector(-3,0)
-		camera1:translate(temp)
-	end
-	if love.keyboard.isDown("d")  then
-        temp = vector(3, 0)
-		camera1:translate(temp)
-	end
-		
+	TEsound.cleanup()		
     ArrowProcessing()
-	PlayerKeyDown(dt)
+	PlayerProcessing(dt)
     FlyProcessing()
 
 
 	ContinueDrawing(CheckMouse())
 end
 
+
 function love.keypressed(key, unicode)
-	PlayerKeyPressed(key)
+	PlayerKeyPressed(key) 
 end
 
 function love.keyreleased(key, unicode)
@@ -165,7 +156,7 @@ function love.draw()
 	camera1:postdraw()
 	
 	-- temp code for draw type display
-	--1 = player, 2 = enemy, 3 = ground, 4 = ice
+	--1 = player, 2 = enemy, 3 = ground, 4 = ice, 5 = swarm zone
 	drawTypeName = ""
 	if drawType == 1 then
 		drawTypeName = "Player"

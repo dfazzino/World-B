@@ -189,3 +189,10 @@ function AdjustFlyObjIndex(objIndex)
 	end
 
 end
+
+
+function ClearSwarms()
+
+    flies = {}
+
+end

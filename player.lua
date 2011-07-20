@@ -1,10 +1,31 @@
 player = nil
 maprun = 0
+playerVelocity = nil
+state = 0  -- state 0 = can jump, 1 = can't jump
 
 function CreatePlayer(objIndex)
 	player = objIndex
 	print ("player = " .. player)
 end
+
+
+function PlayerProcessing(dt)
+    if player ~= nil then
+        VelocityProcessing()
+    end
+        PlayerKeyPressed(dt)
+        PlayerKeyDown(dt)
+
+end
+
+
+function VelocityProcessing()
+
+    velVect = GetVelocity(player)
+    xvel, yvel = velVect:unpack()
+
+end
+
 
 function PlayerKeyPressed(key)
 			
@@ -12,9 +33,12 @@ function PlayerKeyPressed(key)
 		bodies[player]:setX(150)
 		bodies[player]:setY(-100)
 	end
-	if key == "up" then -- double jumping still effect
-		ApplyImpulse(player,0,-175)
+	if key == "w" then -- double jumping still effect
+        if state == 0 then
+            ApplyImpulse(player,0,-275) 
+        end
 	end
+
 end
 
 function PlayerKeyReleased(key)
@@ -75,8 +99,27 @@ function PlayerKeyReleased(key)
 	if key == '9' then
 		RemoveText(0)
 	end
-		
-	
+	if key == 'kp+' then
+		ClearMap()
+        -- LoadMap()
+	end
+	if key == 'kp-' then
+        ClearMap()
+        PrevMap()
+	end
+
+	if key == 'kpenter' then
+        ClearMap()
+		RestartMap()
+	end
+
+end
+
+
+function SetPlayerState(playerState)
+
+	state = playerState
+
 end
 
 
@@ -98,13 +141,32 @@ function printobj()
 end
 
 
-function PlayerKeyDown(dt)
+function PlayerKeyDown()
 
-	if love.keyboard.isDown("left") then -- this seems to work OK!
-		ApplyImpulse(player,-150*dt,0)
-	end
-	if love.keyboard.isDown("right") then
-		ApplyImpulse(player,150*dt,0)
-	end
+    if love.keyboard.isDown( 'a' ) then
+        if xvel ~= nil and xvel > -800 then
+            ApplyForce(player,-400,0)
+        end
+    end
+
+
+    if love.keyboard.isDown( 'd' ) then
+        if xvel ~= nil and xvel < 800 then
+            ApplyForce(player,400,0)
+        end
+    end
+
+    if love.keyboard.isDown( 'up' ) then
+        if xvel ~= nil and xvel < 800 then
+            ApplyForce(player,0,-200)
+        end
+    end
+
+end
+
+
+function ClearPlayer()
+
+    player = nil
 
 end

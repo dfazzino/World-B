@@ -1,3 +1,6 @@
+local maps = {}
+local gameMapIndex = 1
+
 function generatemap()
 
 	e = love.filesystem.exists( "map.dat" )
@@ -7,26 +10,24 @@ function generatemap()
 
 		gameobject = {}
 		parsex = 0
+        mapIndex = 1
+        dataIndex = 1
+        maps[mapIndex] = {}
 
 		for token in string.gmatch(contents, "[^%s]+") do
 			if token == 'G' or token == 'E' or token == 'P' or token == 'I' or token == 'SZ' or token == 'X' then 
 				if gameobject.x ~= nil then
-					if gameobject.type ~= 'SZ' then
-						myObjIndex = GenerateAnObject(gameobject)
-						
-						if gameobject.type == 'E' then
-							CreateAnEnemy(myObjIndex)
-						end
-						if gameobject.type == 'P' then
-							CreatePlayer(myObjIndex)
-						end
-						
-						gameobject = {}
-					else
-					
-                        CreateSwarmZone(gameobject)
-						gameobject = {}
+                    maps[mapIndex][dataIndex] = {}
+                    maps[mapIndex][dataIndex].data = gameobject
+                    dataIndex = dataIndex + 1
+                    -- print (gameobject.type)
+					gameobject = {}
+                    if token == 'X' then
+                        mapIndex = mapIndex + 1
+                        maps[mapIndex] = {}
+                        dataIndex = 1
                     end
+
 				end
 				gameobject.type = token
 				parsex = 0
@@ -52,7 +53,56 @@ function generatemap()
 				parsex = parsex + 1
 			end
 		end
+
+
 	return e
+end
+
+
+function ClearMap()
+
+    ClearPlayer()
+    ClearEnemies()
+    ClearSwarms()
+    ClearArrows()
+    -- ClearPhysics()
+
+end
+
+
+function LoadMap ()
+
+    for i, objData in ipairs(maps[gameMapIndex]) do
+        if objData.data.type == 'E' then
+            -- print ('E')
+            myObjIndex = GenerateAnObject(objData.data)
+            CreateAnEnemy(myObjIndex)
+        end
+        if objData.data.type == 'P' then
+            -- print ('P')
+            myObjIndex = GenerateAnObject(objData.data)
+            CreatePlayer(myObjIndex)
+        end
+
+        if objData.data.type == 'SZ' then
+            CreateSwarmZone(objData.data)
+
+        end
+        if objData.data.type == 'G' then
+            -- print ('G')
+            GenerateAnObject(objData.data)
+
+        end
+
+        if objData.data.type == 'I' then
+            -- print ('I')
+            GenerateAnObject(objData.data)
+        end
+
+    end
+
+    gameMapIndex = gameMapIndex + 1
+ 
 end
 
 
@@ -91,4 +141,18 @@ function DeleteFile ()
 	bodies = {}	
 	ok = love.filesystem.remove( "TEST.TXT" )
 	
+end
+
+
+function RestartMap ()
+
+    gameMapIndex = gameMapIndex - 1
+    LoadMap()
+
+end
+function PrevMap ()
+
+    gameMapIndex = gameMapIndex - 2
+    LoadMap()
+
 end

@@ -25,3 +25,9 @@ function AdjustEnemyObjIndex(objIndex)
 
 end
 
+function ClearEnemies ()
+
+    enemies = {}
+    
+end
+

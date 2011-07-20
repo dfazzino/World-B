@@ -53,10 +53,10 @@ function ShootArrow()
 	arrowobj.inertia = 0
 	arrowobj.width = 10
 	arrowobj.height = 10
-	arrowobj.angle = 0
-	arrowobj.friction = 0
+	arrowobj.friction = .1
 	arrowObjIndex = GenerateAnObject(arrowobj)
     PlaceArrow(arrowObjIndex)
+	-- ApplyAngle(arrowObjIndex, 1)
 	ApplyImpulse(arrowObjIndex, ximpulse * 100, yimpulse * 100)
 
 end
@@ -68,8 +68,8 @@ function ArrowInAir(thisArrow)
             thisArrow.airTimer = love.timer.getMicroTime( )
             if thisArrow.airTimer - thisArrow.airTime > 1 then
                 if bodies[thisArrow.objIndex]:isStatic() == false then
-                    thisArrow.setForRemoval = true
-                    thisArrow.inAir = false
+                    -- thisArrow.setForRemoval = true
+                    -- thisArrow.inAir = false
                     -- debug.debug()
                 end
             end
@@ -144,8 +144,8 @@ function AdjustArrowObjIndex(objIndex)
 end
 
 
--- function Omnomnom(thisArrow, thisFly)
+function ClearArrows()
 
-    -- table.insert(arrows[thisArrow].flies, thisfly)
+    arrows = {}
 
--- end
+end

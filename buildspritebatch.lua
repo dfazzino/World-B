@@ -15,10 +15,9 @@ function drawPlayer()
 		x1, y1, x2, y2, x3, y3, x4, y4 = shapes[player].shape:getBoundingBox() --get the x,y coordinates of all 4 corners of the box.
 		boxwidth = x3 - x2 --calculate the width of the box
 		boxheight = y2 - y1 --calculate the height of the box
-		
 		love.graphics.setColor(255, 0, 0) -- red for mother russia.. i mean the player
 		
-		love.graphics.rectangle("fill", bodies[player]:getX() - boxwidth/2, bodies[player]:getY() - boxheight/2, boxwidth, boxheight)
+		love.graphics.quad("fill", x2,y2,x3,y3,x4,y4,x1,y1)
 	end
 end
 
@@ -48,8 +47,8 @@ function drawBoxThings()
 			love.graphics.rectangle("fill", bodies[i]:getX() - boxwidth/2, bodies[i]:getY() - boxheight/2, boxwidth, boxheight)
 		end
 		if s.objType == "A" then
-			love.graphics.setColor(200, 15, 99) -- pine green BUZZING flies (unscented)
-			love.graphics.rectangle("fill", bodies[i]:getX() - boxwidth/2, bodies[i]:getY() - boxheight/2, boxwidth, boxheight)
+			love.graphics.setColor(20, 15, 190) -- blue arowwwws
+			love.graphics.quad("fill", x2,y2,x3,y3,x4,y4,x1,y1)
 		end
 		if s.objType == "G" then -- ground, dawg
 			love.graphics.setColor(72, 160, 14) -- green ground
