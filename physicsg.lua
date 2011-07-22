@@ -117,15 +117,14 @@ end
 
 function RemoveShape (shapeNum)
 
-    bodies[shapeNum]:putToSleep()
-    shapes[shapeNum].shape:destroy()
+	-- shapes[shapeNum].shape:destroy()
 	table.remove(shapes, shapeNum)
 end
 
 
 function RemoveBody (bodyNum)
 
-    bodies[bodyNum]:destroy()
+	-- bodies[bodyNum]:destroy()
 	table.remove(bodies, bodyNum)
 	objectIndex = objectIndex - 1
 	
@@ -134,11 +133,11 @@ end
 
 function AdjustObjIndexes (removedObjIndexes)
 	for i, thisObjIndex in pairs(removedObjIndexes) do
-        print ('adjustingFlyObj')
+        -- print ('adjustingFlyObj')
 		AdjustFlyObjIndex(thisObjIndex)
-        print ('adjustingArrowObj')
+        -- print ('adjustingArrowObj')
 		AdjustArrowObjIndex(thisObjIndex)
-        print ('adjustingEnemyObj')
+        -- print ('adjustingEnemyObj')
 		AdjustEnemyObjIndex(thisObjIndex)
         --debug.debug()
 	end
@@ -177,6 +176,11 @@ function add(obj1, obj2, contact)
 	        arrX, arrY = contact:getPosition( )
 			bodies[obj2]:setMass(0,0,0,0)
 			bodies[obj2]:putToSleep()
+		end	
+		if ((shapes[obj2].objType == 'G' or shapes[obj2].objType == 'I') or shapes[obj2].objType == 'A') and shapes[obj1].objType == 'A' then
+	        arrX, arrY = contact:getPosition( )
+			bodies[obj1]:setMass(0,0,0,0)
+			bodies[obj1]:putToSleep()
 		end	
 
         if (shapes[obj2].objType == 'P' and (shapes[obj1].objType == 'G' or shapes[obj1].objType == 'I' or shapes[obj1].objType == 'A')) then

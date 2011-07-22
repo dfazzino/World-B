@@ -96,29 +96,29 @@ function GetFlyTarget(thisFly)
     thisFly.arrowNum = nil
 	arrowset = GetArrows()
     if getTarget then
-    for j, arrow in pairs(arrowset) do
+		for j, arrow in pairs(arrows) do
+			-- print (bodies[thisFly.objIndex]:getX())
+			xDistance = bodies[arrow.objIndex]:getX() - bodies[thisFly.objIndex]:getX()
+			yDistance = bodies[arrow.objIndex]:getY() - bodies[thisFly.objIndex]:getY()
+			xDistSq = xDistance * xDistance
+			yDistSq = yDistance * yDistance
 
-        xDistance = bodies[arrow.objIndex]:getX() - bodies[thisFly.objIndex]:getX()
-        yDistance = bodies[arrow.objIndex]:getY() - bodies[thisFly.objIndex]:getY()
-        -- xDistSq = xDistance * xDistance
-        -- yDistSq = yDistance * yDistance
-
-        -- distance = math.sqrt(xDistSq + yDistSq)
-        -- if distance < 1000 then
-            -- hypotenuse = math.sqrt((xDistance*xDistance) + (yDistance*yDistance))
-            if settarget == nil then
-                hldHypotenuse = hypotenuse
-                settarget = arrow.objIndex
-                arrowNum = j
-            else 
-                if hypotenuse < hldHypotenuse then
-                    hldHypotenuse = hypotenuse
-                    settarget = arrow.objIndex
-                    arrowNum = j
-                end
-            end
-        -- end
-    end
+			distance = math.sqrt(xDistSq + yDistSq)
+			-- if distance < 1000 then
+				hypotenuse = math.sqrt((xDistance*xDistance) + (yDistance*yDistance))
+				if settarget == nil then
+					hldHypotenuse = hypotenuse
+					settarget = arrow.objIndex
+					arrowNum = j
+				else 
+					if hypotenuse < hldHypotenuse then
+						hldHypotenuse = hypotenuse
+						settarget = arrow.objIndex
+						arrowNum = j
+					end
+				end
+			-- end
+		end
     end
 
     if settarget ~= nil then
@@ -183,8 +183,14 @@ function AdjustFlyObjIndex(objIndex)
 
 	for i, fly in pairs(flies) do
 		if fly.objIndex > objIndex then
+		--	print ("fly", fly.objIndex, objIndex)
 			fly.objIndex = fly.objIndex - 1
             -- debug.debug()
+		end
+		if fly.target ~= nil then
+			if fly.target > objIndex then
+				fly.target = fly.target - 1
+			end
 		end
 	end
 

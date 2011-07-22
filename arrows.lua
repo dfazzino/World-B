@@ -6,13 +6,13 @@ function ArrowProcessing()
 
     for i, arrow in pairs(arrows) do
 
-        ArrowInAir(arrow)
+        -- ArrowInAir(arrow)
         removeArrowTimer = love.timer.getMicroTime( )
-        if removeArrowTimer - removeArrowTime > 1 then
+        -- if removeArrowTimer - removeArrowTime > 1 then
             removedObjIndexes = RemoveArrows()
             AdjustObjIndexes(removedObjIndexes)
             removeObjIndexes = nil
-        end
+        -- end
     end
 end
 
@@ -65,13 +65,15 @@ end
 function ArrowInAir(thisArrow)
 
         if thisArrow.inAir == true then
+			print ("arrow in the air!", thisArrow)
             thisArrow.airTimer = love.timer.getMicroTime( )
-            if thisArrow.airTimer - thisArrow.airTime > 1 then
-                if bodies[thisArrow.objIndex]:isStatic() == false then
-                    -- thisArrow.setForRemoval = true
-                    -- thisArrow.inAir = false
+            if bodies[thisArrow.objIndex]:isSleeping() == false then
+				if thisArrow.airTimer - thisArrow.airTime > 1 then
+                    thisArrow.setForRemoval = true
                     -- debug.debug()
                 end
+			else
+				thisArrow.inAir = false
             end
         end
    
@@ -124,7 +126,10 @@ function RemoveArrows()
             if #arrows == 0 then
                 arrows = {}
             end
-            print ('removing arrow ' .. i)
+        --    print ('removing arrow ' .. i , 'objIndex:,', arrow.objIndex)
+			for j, arro in pairs(arrows) do 
+		--		print(j, arro.objIndex)
+			end
             -- debug.debug()
         end
     end

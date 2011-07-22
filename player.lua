@@ -72,14 +72,18 @@ function PlayerKeyReleased(key)
 		camera1.zoom = camera1.zoom - .08 
 	end	
 	if key == '1' 	then
-        print 'obj'
-		for i, obj in pairs(shapes) do
-            print (i , obj.objType)
-        end
-        print 'flies'
-		for i, fly in pairs(flies) do
-            print (i , fly.target, fly.arrowNum)
-        end
+        -- print 'obj'
+		-- for i, obj in pairs(shapes) do
+            -- print (i , obj.objType)
+        -- end
+        -- print 'obj'
+		-- for i, obj in pairs(bodies) do
+            -- print (i , obj:getX(), obj:getY())
+        -- end
+        -- print 'flies'
+		-- for i, fly in pairs(flies) do
+            -- print (i , 'target:', fly.target, 'arrownum:', fly.arrowNum)
+        -- end
         print 'arrows'
 		for i, arrow in pairs(arrows) do
             print (i , arrow.objIndex)
@@ -101,7 +105,7 @@ function PlayerKeyReleased(key)
 	end
 	if key == 'kp+' then
 		ClearMap()
-        -- LoadMap()
+        LoadMap()
 	end
 	if key == 'kp-' then
         ClearMap()

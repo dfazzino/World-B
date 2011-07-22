@@ -144,7 +144,6 @@ function love.keyreleased(key, unicode)
 end
 
 function love.draw()
-
     camera1:predraw()
 	love.graphics.draw(tilesetBatch,
 		math.floor(-zoomX*(mapX%1)*tileSize), math.floor(-zoomY*(mapY%1)*tileSize),
@@ -170,6 +169,7 @@ function love.draw()
 		drawTypeName = "Swarm Zone"
 	end
 	
+	love.graphics.setColor(255, 255, 255) -- finally made the text white again
 	love.graphics.print("FPS: "..love.timer.getFPS(), 10, 20)
 	love.graphics.print("DRAWING: "..drawTypeName, 10, 30)	
 end
