@@ -97,7 +97,7 @@ function GetFlyTarget(thisFly)
 	arrowset = GetArrows()
     if getTarget then
 		for j, arrow in pairs(arrows) do
-			-- print (bodies[thisFly.objIndex]:getX())
+			print (bodies[thisFly.objIndex]:getX())
 			xDistance = bodies[arrow.objIndex]:getX() - bodies[thisFly.objIndex]:getX()
 			yDistance = bodies[arrow.objIndex]:getY() - bodies[thisFly.objIndex]:getY()
 			xDistSq = xDistance * xDistance
