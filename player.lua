@@ -71,7 +71,7 @@ function PlayerKeyReleased(key)
 	if key == 'x' 	then
 		camera1.zoom = camera1.zoom - .08 
 	end	
-	if key == '1' 	then
+	if key == 'o' 	then
         -- print 'obj'
 		-- for i, obj in pairs(shapes) do
             -- print (i , obj.objType)
@@ -97,8 +97,28 @@ function PlayerKeyReleased(key)
         getTarget = not getTarget
     end
 
-	if key == '0' then
-		AddText("test", 0,0)
+	if key == '1' then
+		drawType = 1
+	end
+
+	if key == '2' then
+		drawType = 2
+	end
+
+	if key == '3' then
+		drawType = 3
+	end
+
+	if key == '4' then
+		drawType = 4
+	end
+
+	if key == '5' then
+		drawType = 5
+	end
+
+	if key == '6' then
+		drawType = 6
 	end
 	if key == '9' then
 		RemoveText(0)
